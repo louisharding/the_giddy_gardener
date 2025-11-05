@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'giddy_gardener_blogs',
+    'blog',
+    'growing_projects',
 ]
 
 MIDDLEWARE = [
