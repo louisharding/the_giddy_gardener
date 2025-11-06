@@ -16,13 +16,16 @@ class Crop(models.Model):
         ("nut", "Nut"),
         ("spice", "Spice"),
     ]
-
-    #ID primary key
     name = models.CharField(max_length=50)
     type = models.CharField(choices=TYPE_CHOICES)
     sowing_range = models.DateField()
     harvestring_range = models.DateField()
-    life_cycle = models.CharField(choices=["Perennial", "Biennial", "Many Years"])
+    LIFE_CYCLE_CHOICES = (
+        ("perennial", "Perennial"),
+        ("biennial", "Biennial"),
+        ("many_years", "Many Years"),
+    )
+    life_cycle = models.CharField(max_length=20, choices=LIFE_CYCLE_CHOICES)
 
   
 class Allotment(models.Model):
