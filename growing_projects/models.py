@@ -27,6 +27,9 @@ class Crop(models.Model):
     )
     life_cycle = models.CharField(max_length=20, choices=LIFE_CYCLE_CHOICES)
 
+    #add method for returning sowing ranges and harvesting ranges
+    #add method for returning season range 
+
   
 class Allotment(models.Model):
     id = ""
