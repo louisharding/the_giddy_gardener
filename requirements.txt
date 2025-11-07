@@ -1,7 +1,7 @@
 asgiref==3.10.0
-Django==4.2.25
-gunicorn==20.1.0
-setuptools==80.9.0
+bleach==6.3.0
+Django==5.2.8
+django-summernote==0.8.20.0
 sqlparse==0.5.3
 tzdata==2025.2
-whitenoise==6.5.0
+webencodings==0.5.1
