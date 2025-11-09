@@ -25,10 +25,10 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY") or 'django-insecure-d#9@mr#i&&qy_mr-735z9=e3h1moxh5m1@n9ho&i(!%cj@nqpg'
-#SECRET_KEY = 'django-insecure-d#9@mr#i&&qy_mr-735z9=e3h1moxh5m1@n9ho&i(!%cj@nqpg'
+#SCRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-d#9@mr#i&&qy_mr-735z9=e3h1moxh5m1@n9ho&i(!%cj@nqpg'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com',
                  '127.0.0.1',]
@@ -127,6 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

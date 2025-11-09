@@ -8,9 +8,6 @@ node_modules/
 .github/
 cloudinary_python.txt
 .venv
-
-
-
 .venv/
 env.py
 blog/fixtures/
