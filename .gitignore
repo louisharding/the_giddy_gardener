@@ -11,3 +11,4 @@ cloudinary_python.txt
 .venv/
 env.py
 blog/fixtures/
+debug_admin.html
