@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growing Projects index</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mt-3 left">
+      <div class="row">
+        {% for crop in crop_list %}
+        <div>
+            <h2>{{ crop.name }}</h2>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
