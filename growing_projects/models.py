@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -16,7 +17,7 @@ class Crop(models.Model):
         ("nut", "Nut"),
         ("spice", "Spice"),
     ]
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200, unique=True)
     type = models.CharField(choices=TYPE_CHOICES)
     sowing_range = models.DateField()
     harvestring_range = models.DateField()
@@ -32,15 +33,28 @@ class Crop(models.Model):
 
   
 class Allotment(models.Model):
-    id = ""
-    name = ""
-    area = "" # in meters square
-    soilTypes = "" #inclusive dropdown list
-    climate = "" #dropdownlist
-    coverage = "" #dropdown list eg eg- indoor, outdoor, greenhouse, coldframe etc
-    seaLevel = ""
-    country = ""
-    city = ""
-    localPests = ""
-    soilAcidity = ""
-    postcode = ""
+    name = models.CharField(max_length=200, default="Allotment")
+    garden = models.CharField(max_length=200, default="garden")
+    # area = "" # in meters square
+    # soilTypes = "" #inclusive dropdown list
+    # climate = "" #dropdownlist
+    # coverage = "" #dropdown list eg eg- indoor, outdoor, greenhouse, coldframe etc
+    # seaLevel = ""
+    # country = ""
+    # city = ""
+    # localPests = ""
+    # soilAcidity = ""
+    # postcode = ""
+    #perhaps an option to make an allotment public, doing so allows users to create premade common allotments for other users to 
+    #select from and change as they see fit
+    #there would need to be a limit as to how many public allotments could be made by a user
+    #as to avoid griefing and spamming
+
+
+# Each user can add a garden, a garden can contain multiple allotments,
+# A garden is simply where a user stores their saved allotments
+class Garden(models.Model):
+    name = models.CharField(max_length=200, default="My Garden")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gardener")
+
+    
