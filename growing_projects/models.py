@@ -15,6 +15,11 @@ TYPE_CHOICES = [
     ("nut", "Nut"),
     ("spice", "Spice"),
 ]
+LIFE_CYCLE_CHOICES = (
+    ("perennial", "Perennial"),
+    ("biennial", "Biennial"),
+    ("many_years", "Many Years"),
+)
 
 class Crop(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -22,11 +27,6 @@ class Crop(models.Model):
     """
     sowing_range = models.DateField()
     harvestring_range = models.DateField()
-    LIFE_CYCLE_CHOICES = (
-        ("perennial", "Perennial"),
-        ("biennial", "Biennial"),
-        ("many_years", "Many Years"),
-    )
     life_cycle = models.CharField(max_length=20, choices=LIFE_CYCLE_CHOICES)
     add method for returning sowing ranges and harvesting ranges
     add method for returning season range 

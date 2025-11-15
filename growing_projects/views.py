@@ -20,5 +20,5 @@ def crop_detail(request, name):
         "growing_projects/crop_profile.html",
         {
             "crop": crop,
-        }
+        },
     )
