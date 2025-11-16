@@ -9,19 +9,12 @@ class CropList(generic.ListView):
     #how its paginated (default like 3, down by like 10, look into making it endless scrolling)
 
 
-def crop_detail(request, name):
-    """
-    """
+def crop_detail(request, slug):
+    """Display a single Crop by slug."""
     queryset = Crop.objects.filter()
-    crop = get_object_or_404(queryset, name=name)
+    crop = get_object_or_404(queryset, slug=slug)
 
-    return render(
-        request,
-        "growing_projects/crop_profile.html",
-        {
-            "crop": crop,
-        },
-    )
+    return render(request, "growing_projects/crop_profile.html", {"crop": crop})
 
 
 def home(request):
@@ -29,3 +22,8 @@ def home(request):
         # 'featured': Crop.objects.filter(... )[:3],
     }
     return render(request, 'growing_projects/home.html', context)
+
+
+def my_garden(request):
+    # Minimal placeholder view for the user's garden page
+    return render(request, 'growing_projects/my_garden.html', {})

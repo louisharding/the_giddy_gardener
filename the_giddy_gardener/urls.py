@@ -18,15 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-
 urlpatterns = [
-    path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('summernote/', include('django_summernote.urls')),
-    path("blogs/", include("blog.urls"), name="blog-urls"),
-    path("crops/", include("growing_projects.urls")),
-
-    path('', include('growing_projects.urls')),   # app defines the home route
-
-
+    path('blogs/', include('blog.urls')),                # blog routes at /blogs/
+    path('', include('growing_projects.urls')),          # site root handled by growing_projects
 ]

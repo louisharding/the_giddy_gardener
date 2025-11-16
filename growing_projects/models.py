@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 # Crop type 
 TYPE_CHOICES = [
@@ -54,19 +56,22 @@ LIFE_CYCLE_CHOICES = (
 
 # A crop is grown in an allotment. Crops have multiple properties and can only be effected (yes effected with an e) by admins
 class Crop(models.Model):
-    common_name = models.CharField(max_length=200, null=False, blank=False)                      # Braeburn Apple
-    scientific_name = models.CharField(max_length=200, unique=True, null=False, blank=False)     # PK Breaburnicus Appeleo
+    common_name = models.CharField(max_length=200, null=True, blank=True)                      # Braeburn Apple
+    scientific_name = models.CharField(max_length=200, unique=True, null=True, blank=True)     # PK Breaburnicus Appeleo
     type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=False, blank=False)        # Fruit
+    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
     #name = models.CharField(max_length=200, unique=True)
 
-    life_cycle = models.CharField(max_length=50, choices=LIFE_CYCLE_CHOICES)
+    life_cycle = models.CharField(max_length=50, choices=LIFE_CYCLE_CHOICES, null=True, blank=True)
     # Sowing and Harvesting ranges
-    sowing_date_earliest = models.DateField()
-    sowing_date_latest = models.DateField()
+    sowing_date_earliest = models.DateField(null=True, blank=True)
+    sowing_date_latest = models.DateField(null=True, blank=True)
 
-    harvesting_date_earliest = models.DateField()
-    harvesting_date_latest = models.DateField()
+    harvesting_date_earliest = models.DateField(null=True, blank=True)
+    harvesting_date_latest = models.DateField(null=True, blank=True)
 
+    def get_absolute_url(self):
+        return reverse('growing_projects:crop_detail', kwargs={'slug': self.slug})
     def __str__(self):
         # Return a human-friendly representation for admin and debugging
         if getattr(self, 'common_name', None) and getattr(self, 'scientific_name', None):
@@ -74,12 +79,32 @@ class Crop(models.Model):
         # Fallback to the default object representation if fields are missing
         return super().__str__()
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('growing_projects:crop_detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        # Auto-generate slug from common_name if not provided
+        from django.utils.text import slugify
+
+        if not self.slug:
+            base = slugify(self.common_name or self.scientific_name)[:190]
+            slug = base
+            i = 1
+            Model = self.__class__
+            while Model.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base}-{i}"
+                i += 1
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
 
 
 # A garden is simply where a user stores their saved allotments
 class Garden(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gardener")
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     def __str__(self):
         return f"{self.owner}'s Garden"
 
