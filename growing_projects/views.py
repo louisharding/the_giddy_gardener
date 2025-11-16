@@ -22,3 +22,10 @@ def crop_detail(request, name):
             "crop": crop,
         },
     )
+
+
+def home(request):
+    context = {
+        # 'featured': Crop.objects.filter(... )[:3],
+    }
+    return render(request, 'growing_projects/home.html', context)

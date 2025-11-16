@@ -46,13 +46,13 @@ for code, label in SUBTYPE_CHOICES:
         seen.add(code)
 SUBTYPE_CHOICES = tuple(uniq_subtypes)
 
-
 LIFE_CYCLE_CHOICES = (
     ("perennial", "Perennial"),
     ("biennial", "Biennial"),
     ("annual", "Annual"),
 )
 
+# A crop is grown in an allotment. Crops have multiple properties and can only be effected (yes effected with an e) by admins
 class Crop(models.Model):
     common_name = models.CharField(max_length=200, null=False, blank=False)                      # Braeburn Apple
     scientific_name = models.CharField(max_length=200, unique=True, null=False, blank=False)     # PK Breaburnicus Appeleo
@@ -76,13 +76,10 @@ class Crop(models.Model):
 
 
 
-
-
-
 # A garden is simply where a user stores their saved allotments
 class Garden(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gardener")
-    
+    description = models.TextField()
     def __str__(self):
         return f"{self.owner}'s Garden"
 
@@ -99,7 +96,6 @@ class Garden(models.Model):
 
 
 # Allotments contain a single crop and are used to describe the situation where said crop will be grown :) ::leaf emoji
-# Deleted upon 
 class Allotment(models.Model):
     name = models.CharField(max_length=200, default="Allotment")    #Eg flourpatch 1, runnerbean square, potato pathway
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, related_name="garden")
