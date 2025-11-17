@@ -106,12 +106,12 @@ class Crop(models.Model):
 
 
 
+
 # A garden is simply where a user stores their saved allotments
 class Garden(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gardener")
     description = models.TextField(null=True, blank=True)
-    def __str__(self):
-        return f"{self.owner}'s Garden"
+    crops = models.ManyToManyField('Crop', blank=True, related_name='gardens')
 
     # Nice to haves:
     """
@@ -122,6 +122,7 @@ class Garden(models.Model):
     # localPests = ""
     # seaLevel = ""
     """   
+
 
 
 

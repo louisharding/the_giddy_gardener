@@ -1,13 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Garden</title>
-</head>
-<body>
-    <h1>Welcome to My Garden</h1>
-    <p>Explore the various plants and crops I am growing!</p>  
-    
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Garden</h1>
+
+  <p>Owner: {{ garden.owner }}</p>
+
+  <h2>Crops in your garden</h2>
+  {% if crops %}
+    <ul>
+      {% for c in crops %}
+        <li>
+          {{ c.common_name|default:c.scientific_name }}
+          <a href="{% url 'growing_projects:crop_detail' slug=c.slug %}">view</a>
+          <!-- remove link -->
+          <form method="post" action="{% url 'growing_projects:remove_crop' %}" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="crop_id" value="{{ c.pk }}">
+            <button type="submit">Remove</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You haven't added any crops yet.</p>
+  {% endif %}
+
+  <h3>Add a crop to your garden</h3>
+  <form method="post" action="{% url 'growing_projects:my_garden' %}">
+    {% csrf_token %}
+    {{ add_form.as_p }}
+    <button type="submit">Add crop</button>
+  </form>
+{% endblock %}
