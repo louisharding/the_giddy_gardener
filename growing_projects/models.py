@@ -54,19 +54,18 @@ LIFE_CYCLE_CHOICES = (
     ("annual", "Annual"),
 )
 
-# A crop is grown in an allotment. Crops have multiple properties and can only be effected (yes effected with an e) by admins
+# A crop is grown in an allotment. Crops have multiple properties and can only be effected by admins
 class Crop(models.Model):
-    common_name = models.CharField(max_length=200, null=True, blank=True)                      # Braeburn Apple
-    scientific_name = models.CharField(max_length=200, unique=True, null=True, blank=True)     # PK Breaburnicus Appeleo
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=False, blank=False)        # Fruit
+    scientific_name = models.CharField(max_length=200, unique=True, null=True, blank=True)                      # PK Breaburnicus Appeleo
+    common_name = models.CharField(max_length=200, null=True, blank=True, default="Please add common name")     # Braeburn Apple
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=False, blank=False)                       # Fruit
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
-    #name = models.CharField(max_length=200, unique=True)
 
+    # Life cycle; how the crop grows, matures and yields throughout it's life
     life_cycle = models.CharField(max_length=50, choices=LIFE_CYCLE_CHOICES, null=True, blank=True)
-    # Sowing and Harvesting ranges
+    # Sowing & Harvesting ranges; the earliest and latest a crop can be sown and harvested
     sowing_date_earliest = models.DateField(null=True, blank=True)
     sowing_date_latest = models.DateField(null=True, blank=True)
-
     harvesting_date_earliest = models.DateField(null=True, blank=True)
     harvesting_date_latest = models.DateField(null=True, blank=True)
 
