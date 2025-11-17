@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+from django.utils.text import slugify
 
 # Crop type 
 TYPE_CHOICES = [
@@ -52,13 +52,16 @@ LIFE_CYCLE_CHOICES = (
     ("perennial", "Perennial"),
     ("biennial", "Biennial"),
     ("annual", "Annual"),
+    ("ephemeral", "Ephemeral"),
 )
 
+
+# Could have a PICTURE field for the crop - makes perfect sense
 # A crop is grown in an allotment. Crops have multiple properties and can only be effected by admins
 class Crop(models.Model):
-    scientific_name = models.CharField(max_length=200, unique=True, null=True, blank=True)                      # PK Breaburnicus Appeleo
-    common_name = models.CharField(max_length=200, null=True, blank=True, default="Please add common name")     # Braeburn Apple
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=False, blank=False)                       # Fruit
+    scientific_name = models.CharField(max_length=200, unique=True, null=False, blank=True, default="")                 
+    common_name = models.CharField(max_length=200, null=False, blank=True, default="")     
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=False, blank=True)                       
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
 
     # Life cycle; how the crop grows, matures and yields throughout it's life
@@ -69,8 +72,6 @@ class Crop(models.Model):
     harvesting_date_earliest = models.DateField(null=True, blank=True)
     harvesting_date_latest = models.DateField(null=True, blank=True)
 
-    def get_absolute_url(self):
-        return reverse('growing_projects:crop_detail', kwargs={'slug': self.slug})
     def __str__(self):
         # Return a human-friendly representation for admin and debugging
         if getattr(self, 'common_name', None) and getattr(self, 'scientific_name', None):
@@ -79,15 +80,20 @@ class Crop(models.Model):
         return super().__str__()
 
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse('growing_projects:crop_detail', kwargs={'slug': self.slug})
+
+    def ensure_common_name(self):
+        """If `common_name` is empty, set it to the scientific name (or empty string)."""
+        # common_name is allowed to be blank; if it's blank or whitespace use scientific_name
+        if not (self.common_name and str(self.common_name).strip()):
+            self.common_name = self.scientific_name or ""
 
     def save(self, *args, **kwargs):
         # Auto-generate slug from common_name if not provided
-        from django.utils.text import slugify
-
+        # Ensure common_name is present for display and slug generation
+        self.ensure_common_name()
         if not self.slug:
-            base = slugify(self.common_name or self.scientific_name)[:190]
+            base = f"{slugify(self.scientific_name)}-{self.life_cycle or ''}-{self.type or ''}"[:190]
             slug = base
             i = 1
             Model = self.__class__
