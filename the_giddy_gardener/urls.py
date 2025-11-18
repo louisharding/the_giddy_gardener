@@ -19,9 +19,10 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 urlpatterns = [
+    path('', include(('growing_projects.urls', 'growing_projects'), namespace='growing_projects')),          # site root handled by growing_projects (namespaced)
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('summernote/', include('django_summernote.urls')),
-    path('blogs/', include('blog.urls')),                # blog routes at /blogs/
-    path('', include('growing_projects.urls')),          # site root handled by growing_projects
+    path('blogs/', include(('blog.urls','blog'), namespace='blog')),
+
 ]

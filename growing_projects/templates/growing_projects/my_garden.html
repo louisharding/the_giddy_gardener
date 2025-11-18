@@ -10,7 +10,7 @@
       {% for c in crops %}
         <li>
           {{ c.common_name|default:c.scientific_name }}
-          <a href="{% url 'growing_projects:crop_detail' slug=c.slug %}">view</a>
+          <a href="{% url 'growing_projects:crop_detail' c.pk %}">view</a>
           <!-- remove link -->
           <form method="post" action="{% url 'growing_projects:remove_crop' %}" style="display:inline;">
             {% csrf_token %}
