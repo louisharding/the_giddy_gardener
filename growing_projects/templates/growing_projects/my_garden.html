@@ -5,9 +5,9 @@
 <p>Owner: {{ garden.owner }}</p>
 
 <h2>Crops in your garden</h2>
-{% if crops %}
+{% if garden.crops.exists %}
 <ul>
-  {% for c in crops %}
+  {% for c in garden.crops.all %}
   <li>
     {{ c.common_name|default:c.scientific_name }}
     <a href="{% url 'growing_projects:crop_detail' c.pk %}">view</a>

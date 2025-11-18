@@ -20,34 +20,46 @@
     integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
   <!-- Custom CSS-->
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'images/favicon.jpg' %}" type="image/jpeg" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.jpg' %}" type="image/jpeg" />
 </head>
 
 <body class="d-flex flex-column h-100 main-bg">
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'growing_projects:home' %}">
-        <span class="brand">the giddy gardener</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link {% if request.path == home_url %}active{% endif %}" aria-current="page"
-              href="{% url 'growing_projects:home' %}">Home</a>
-          </li>
-        </ul>
-        <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
-          {% csrf_token %}
-          {% if user.is_authenticated %}
-          <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
-          <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-          {% else %}
-          <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
-          {% endif %}
-        </form>
+      <div class="d-flex align-items-center w-100">
+        <!-- Left: image links -->
+        <div class="d-flex align-items-center" style="gap:0.5rem;">
+          <a href="/blogs/" title="Blogs">
+            <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" width="34" height="34" />
+          </a>
+          <a href="{% url 'growing_projects:crops' %}" title="Crops">
+            <img src="{% static 'images/crops_icon.png' %}" alt="Crops" width="34" height="34" />
+          </a>
+          <a href="{% url 'growing_projects:my_garden' %}" title="My Garden">
+            <img src="{% static 'images/garden_icon.png' %}" alt="My Garden" width="34" height="34" />
+          </a>
+        </div>
+
+        <!-- Center: brand -->
+        <a class="navbar-brand mx-auto text-center" href="{% url 'growing_projects:home' %}">
+          <span class="brand">The Giddy Gardener</span>
+        </a>
+
+        <!-- Right: auth -->
+        <div class="d-flex align-items-center" style="gap:0.5rem;">
+          <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+            {% else %}
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
+            {% endif %}
+          </form>
+        </div>
       </div>
     </div>
   </nav>
