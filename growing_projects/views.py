@@ -3,10 +3,10 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
 from django.views import generic
-
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # Create your views here.
@@ -76,7 +76,7 @@ def crop_edit(request, pk):
     except Exception:
         return redirect('growing_projects:crop_detail', slug=crop.slug or crop.pk)
 
-
+# Delete a crop from the database - only for permitted users
 @login_required
 def crop_delete(request, pk):
     if request.method != 'POST':
@@ -89,11 +89,45 @@ def crop_delete(request, pk):
 
 
 
+# A logged-in user can add a crop to their garden 
 @login_required
-def remove_crop(request):
-    if request.method == 'POST':
-        crop_id = request.POST.get('crop_id')
-        crop = get_object_or_404(Crop, pk=crop_id)
-        garden, _ = Garden.objects.get_or_create(owner=request.user)
-        garden.crops.remove(crop)
+def add_crop_to_garden(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("POST required")
+    crop_id = request.POST.get('crop_id')
+    if not crop_id:
+        messages.error(request, "No crop specified.")
+        return redirect('growing_projects:my_garden')
+    try:
+        crop = get_object_or_404(Crop, pk=int(crop_id))
+    except ValueError:
+        messages.error(request, "Invalid crop id.")
+        return redirect('growing_projects:my_garden')
+
+    garden, _ = Garden.objects.get_or_create(owner=request.user)
+    if garden.crops.filter(pk=crop.pk).exists():
+        messages.info(request, "That crop is already in your garden.")
+    else:
+        garden.crops.add(crop)
+        messages.success(request, f"Added {crop.common_name or crop.scientific_name} to your garden.")
+    return redirect('growing_projects:my_garden')
+
+# A logged-in user can remove a crop from their garden
+@login_required
+def remove_crop_from_garden(request):
+    """Handle POST to remove a crop from the current user's garden."""
+    if request.method != 'POST':
+        return HttpResponseBadRequest("POST required")
+    crop_id = request.POST.get('crop_id')
+    if not crop_id:
+        messages.error(request, "No crop specified.")
+        return redirect('growing_projects:my_garden')
+    try:
+        crop = Garden.objects.get(owner=request.user).crops.get(pk=int(crop_id))
+    except (ValueError, Garden.DoesNotExist, Crop.DoesNotExist):
+        messages.error(request, "Crop not found in your garden.")
+        return redirect('growing_projects:my_garden')
+
+    Garden.objects.get(owner=request.user).crops.remove(crop)
+    messages.success(request, f"Removed {crop.common_name or crop.scientific_name}.")
     return redirect('growing_projects:my_garden')
