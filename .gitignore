@@ -12,4 +12,5 @@ cloudinary_python.txt
 env.py
 blog/fixtures/
 growing_projects/fixtures/
+growing_projects/management/
 debug_admin.html

@@ -3,8 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseForbidden
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.views import generic
 
 from django.contrib.auth.decorators import login_required
@@ -87,9 +86,6 @@ def crop_delete(request, pk):
         raise PermissionDenied
     crop.delete()
     return redirect('growing_projects:crops')
-
-
-
 
 
 

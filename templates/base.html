@@ -63,7 +63,15 @@
               >
             </li>
           </ul>
-          <span class="navbar-text text-muted"> growing all the time </span>
+          <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
+              <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+            {% else %}
+              <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
+            {% endif %}
+          </form>
         </div>
       </div>
     </nav>
@@ -79,7 +87,6 @@
       <p class="m-0 text-center text-white">123</p>
       <p class="m-0 text-center text-white">
         Follow us: <i class="fab fa-facebook-square ms-3"></i>
-        <i class="fab fa-twitter-square ms-3"></i>
         <i class="fab fa-instagram-square ms-3"></i>
         <i class="fab fa-youtube-square ms-3"></i>
       </p>

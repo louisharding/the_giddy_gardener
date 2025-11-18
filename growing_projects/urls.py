@@ -5,7 +5,6 @@ app_name = 'growing_projects'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    # app routes
     path('crops/', views.CropList.as_view(), name='crops'),
     path('crops/<slug:slug>/', views.crop_detail, name='crop_detail'),
     path('crops/<int:pk>/edit/', views.crop_edit, name='crop_edit'),
