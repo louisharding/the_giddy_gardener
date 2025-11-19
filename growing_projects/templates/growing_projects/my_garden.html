@@ -2,46 +2,39 @@
 {# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
 {% block content %}
 <section class="site-container mt-3">
-  <h1>My Garden</h1>
-  {% block page_header %}
+
   <div class="page-header">
-    <p class="lead">Owner: {{ garden.owner }}</p>
-
-    <div class="mt-3">
-      <h3 class="h5 mb-2">Add a crop to your garden</h3>
-      <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-0">
-        {% csrf_token %}
-        {{ add_form.as_p }}
-        <button type="submit" class="btn btn-primary">Add crop</button>
-      </form>
-    </div>
+    <h1>{{ garden.owner }}'s Garden</h1>
+    <h1>Crops in your garden</h1>
+    <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
+      {% csrf_token %}
+      {{ add_form.as_p }}
+      <button type="submit" class="btn btn-primary">Add crop</button>
+    </form>
   </div>
-  {% endblock page_header %}
-
-  <h2 class="mt-4">Crops in your garden</h2>
 
   <div class="row">
     {% if garden.crops.exists %}
-      {% for crop in garden.crops.all %}
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
-              <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
-              <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
-            </div>
-            <div class="card-footer">
-              <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
-                {% csrf_token %}
-                <input type="hidden" name="crop_id" value="{{ crop.pk }}">
-                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-              </form>
-            </div>
-          </div>
+    {% for crop in garden.crops.all %}
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
+          <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
+          <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
         </div>
-      {% endfor %}
+        <div class="card-footer">
+          <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="crop_id" value="{{ crop.pk }}">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-      <p class="mb-3">You haven't added any crops yet.</p>
+    <p class="mb-3">You haven't added any crops yet.</p>
     {% endif %}
   </div>
 
