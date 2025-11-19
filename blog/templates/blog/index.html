@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {# blog/index.html — List of posts. Renders inside `base.html`'s `.site-container`. #}
 {% block content %}
-<section class="post-grid">
+<section class="post-grid site-container mt-3">
   <div class="row mt-3">
     {% for post in post_list %}
     <div class="col-md-4">

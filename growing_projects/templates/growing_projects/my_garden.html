@@ -1,35 +1,45 @@
 {% extends "base.html" %}
 {# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
 {% block content %}
-<section class="site-container">
+<section class="site-container mt-3">
   <h1>My Garden</h1>
 
   <p>Owner: {{ garden.owner }}</p>
 
-  <h2>Crops in your garden</h2>
-  {% if garden.crops.exists %}
-  <ul class="list-unstyled">
-    {% for c in garden.crops.all %}
-    <li class="mb-2">
-      {{ c.common_name|default:c.scientific_name }}
-      <a href="{% url 'growing_projects:crop_detail' c.pk %}">view</a>
-      <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline ms-2">
-        {% csrf_token %}
-        <input type="hidden" name="crop_id" value="{{ c.pk }}">
-        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-      </form>
-    </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>You haven't added any crops yet.</p>
-  {% endif %}
 
-  <h3>Add a crop to your garden</h3>
-  <form method="post" action="{% url 'growing_projects:my_garden' %}">
-    {% csrf_token %}
-    {{ add_form.as_p }}
-    <button type="submit" class="btn btn-primary">Add crop</button>
-  </form>
+    <h3 class="mt-4">Add a crop to your garden</h3>
+    <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
+      {% csrf_token %}
+      {{ add_form.as_p }}
+      <button type="submit" class="btn btn-primary">Add crop</button>
+    </form>
+
+    <h2 class="mt-4">Crops in your garden</h2>
+
+  <div class="row">
+    {% if garden.crops.exists %}
+      {% for crop in garden.crops.all %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
+              <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
+              <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
+            </div>
+            <div class="card-footer">
+              <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="crop_id" value="{{ crop.pk }}">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="mb-3">You haven't added any crops yet.</p>
+    {% endif %}
+  </div>
+
 </section>
 {% endblock %}

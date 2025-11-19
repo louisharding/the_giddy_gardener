@@ -57,6 +57,7 @@ button { font: inherit; }
   --img-favicon: url('/static/images/favicon.png');
   --img-card: url('/static/images/crop_board.png');
   --img-button: url('/static/images/slate_tile.png');
+  --img-parchment: url('/static/images/parchment.png');
 }
 
 /* Base layout */
@@ -225,6 +226,20 @@ form button { cursor: pointer; }
 .site-header .navbar-text { color: var(--ink) !important; }
 .site-header .navbar { background: transparent; box-shadow: none; }
 .site-header .nav-icon { background: transparent; }
+
+/* Apply the parchment tile background only to direct children inside the header container */
+.site-header .site-container > * {
+  background-image: var(--img-parchment);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+/* Ensure we don't override explicit card backgrounds inside header (if any) */
+.site-header .site-container .card,
+.site-header .site-container .crop-card {
+  background-image: var(--img-card) !important;
+}
 
 .site-footer {
   /* keep existing footer color for text contrast, but apply tile behind */

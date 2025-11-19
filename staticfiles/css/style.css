@@ -4,6 +4,7 @@
   - Keeps existing class names used by templates but normalises layout
   - Ready for you to tweak variables at the top
 */
+@import url('https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap');
 
 /* Reset / Normalize (minimal) */
 *, *::before, *::after { box-sizing: border-box; }
@@ -27,11 +28,12 @@ button { font: inherit; }
 */
 
 /* 1. Tokens & Variables: central theme values and image tokens
-   Edit these to change the site look without hunting through file. */
+  Edit these to change the site look without hunting through file. */
 :root {
   /* Colours */
   --bg: #F9FAFC;
-  --surface: #FFFFFF;
+  --surface: #d844d8;
+  --invis: #ffffff00; /*quickfix to make things invisible*/
   --muted: #6B7280; /* gray */
   --brand: #188181; /* primary */
   --accent: #004d17; /* dark-green */
@@ -41,6 +43,7 @@ button { font: inherit; }
   /* Layout tokens */
   --card-radius: 8px;
   --container-width: 1100px;
+  --header-height: 68px;
   --gap-sm: 0.5rem;
   --gap: 1rem;
   --gap-lg: 1.5rem;
@@ -49,16 +52,19 @@ button { font: inherit; }
   --static-path: '/static/images';
   --img-header: url('/static/images/header.png');
   --img-footer: url('/static/images/footer2.png');
-  --img-wood: url('/static/images/wooden_board.png');
+  --img-wood: url('/static/images/wooden_board2.png');
   --img-stones: url('/static/images/background_stones3.png');
   --img-favicon: url('/static/images/favicon.png');
+  --img-card: url('/static/images/crop_board.png');
+  --img-button: url('/static/images/slate_tile.png');
 }
 
 /* Base layout */
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: Roboto, Lato, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+  /* Use Coming Soon across the site first, then fall back to the previous stack */
+  font-family: "Coming Soon", Roboto, Lato, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
@@ -109,13 +115,24 @@ h1 { font-size: 1.75rem; }
 h2 { font-size: 1.25rem; }
 
 /* Cards */
-.card { background: var(--surface); border-radius: var(--card-radius); box-shadow: 0 1px 3px rgba(16,24,40,0.04); padding: var(--gap); }
+.card {
+  background-color: var(--invis);
+  background-image: var(--img-card);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; /* stretch to fill without cropping (may distort aspect ratio) */
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
+  padding: var(--gap);
+  color: #ffe3e4;
+  overflow: hidden; /* ensure corners clip the background */
+}
 
 /* Hero grid used on the landing page */
-.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; background: var(--bg); }
+.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; }
 .hero-grid .hero-list { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem; }
 .hero-card { position:relative; display:block; text-decoration:none; }
-.hero-card img { width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
+.hero-card img { width:300px; max-width:100%; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
 .hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem; }
 
 /* Crop detail layout */
@@ -137,6 +154,14 @@ h2 { font-size: 1.25rem; }
 .link:hover { color: var(--ink); text-decoration: underline; }
 
 /* Buttons (keep bootstrap defaults but add small utility) */
+.btn, button, input[type="submit"], input[type="button"] {
+  background-image: var(--img-button);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  overflow: hidden;
+  border: none;
+}
 .btn-signup, .btn-edit { background-color: var(--brand); color: #fff; border: none; padding: 0.45rem 0.75rem; border-radius: 6px; }
 .btn-signup:hover { opacity: 0.95; }
 .btn-delete { background: var(--accent); color: #fff; border: none; padding: 0.35rem 0.6rem; border-radius: 6px; }
@@ -180,16 +205,39 @@ form button { cursor: pointer; }
    Use absolute static URLs so paths remain valid after collectstatic
    and on case-sensitive production hosts. */
 .site-header {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
-  min-height: 68px;
+  min-height: var(--header-height);
+  padding: 0.35rem 0;
   height: auto;
-  background-image: url('/static/images/header.png');
+  background-image: var(--img-header);
   background-repeat: repeat-x; /* repeat horizontally across the top */
   background-position: top center;
-  /* force tile to fit debug height so it's clearly visible */
-  background-size: auto 68px !important;
-  background-blend-mode: overlay;
+  background-size: auto var(--header-height);
+  background-color: transparent;
+}
+
+/* Tweak navbar elements when inside the tiled header so links are legible */
+.site-header .navbar-brand,
+.site-header .nav-link,
+.site-header .nav-icon,
+.site-header .navbar-text { color: var(--ink) !important; }
+.site-header .navbar { background: transparent; box-shadow: none; }
+.site-header .nav-icon { background: transparent; }
+
+/* Apply the slate/button tile background only to direct children inside the header container */
+.site-header .site-container > * {
+  background-image: var(--img-button);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+/* Ensure we don't override explicit card backgrounds inside header (if any) */
+.site-header .site-container .card,
+.site-header .site-container .crop-card {
+  background-image: var(--img-card) !important;
 }
 
 .site-footer {
@@ -197,7 +245,7 @@ form button { cursor: pointer; }
   background-image: url('/static/images/footer2.png');
   background-repeat: repeat-x; /* repeat horizontally */
   background-position: center bottom;
-  background-size: auto  100% !important;
+  background-size: auto 100%;
   padding-top: 8px; /* ensure footer has some height so tile is visible */
 }
 
@@ -219,9 +267,10 @@ form button { cursor: pointer; }
    - The rule adds left padding equal to the visual size so the image does not overlap text.
 */
 .content-with-wood {
-  --wood-width: clamp(80px, 20vw, 280px); /* min 80px, preferred 20vw, max 280px */
-  background-image: url('/static/images/wooden_board.png') !important;
-  background-repeat: repeat-y repeat-x;
+  /*--wood-width: clamp(80px, 20vw, 280px); /* min 80px, preferred 20vw, max 280px */
+  /* background-image: url('/static/images/wooden_board2.png'); */
+  background-image: var(--img-wood);
+  background-repeat: repeat-y;
   background-position: left center;
   background-size: var(--wood-width) auto; 
   background-attachment: scroll;
@@ -253,7 +302,19 @@ form button { cursor: pointer; }
 
 
 
+.kranky-regular {
+  font-family: "Kranky", serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+
+
+.coming-soon-regular {
+  font-family: "Coming Soon", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 
 
 /* End of stylesheet */

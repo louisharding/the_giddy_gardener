@@ -1,90 +1,60 @@
-{% extends 'base.html' %} 
-{% load static %}
-{% load crispy_forms_tags %} 
-
-{% block content %}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load humanize %}
+
 {# blog/post_detail.html — Single post view. Renders inside `base.html`'s `.site-container`. #}
 {% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
-<div class="masthead">
+<section class="site-container mt-3">
+  <div class="masthead text-center mb-3">
+    <h1 class="display-4">{{ post.title }}</h1>
+    <p class="lead">By {{ post.author }}</p>
+  </div>
+
   <div class="row">
-    <div class="col-12 text-center">
-      <h1 class="display-4">{{ post.title }}</h1>
-      <p class="lead">By {{ post.author }}</p>
-    </div>
-  </div>
-</div>
+    <div class="col-lg-8">
+      <article class="post">
+        <p class="text-muted">Published {{ post.created_on|naturaltime }}</p>
+        {{ post.content|safe }}
 
-<div class="row mt-4">
-  <div class="col-lg-8">
-    <article class="post">
-      <p class="text-muted">Published {{ post.created_on|naturaltime }}</p>
-      {{ post.content|safe }}
-      <hr>
-      <h4>Comments</h4>
-      {% for comment in comments %}
-      <div class="media mb-3">
-        <div class="media-body">
-          <h6 class="mt-0">{{ comment.name }}</h6>
-          <p class="text-muted">{{ comment.created_on|naturaltime }}</p>
-          <p>{{ comment.body }}</p>
-        </div>
-      </div>
-      {% empty %}
-      <p>No comments yet.</p>
-      {% endfor %}
-
-      <hr>
-      <h4>Leave a comment</h4>
-      <form method="post">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit" class="btn btn-primary mt-2">Submit</button>
-      </form>
-    </article>
-  </div>
-  <div class="col-lg-4">
-    <aside>
-      <h5>About the author</h5>
-      <p>{{ post.author.profile.bio }}</p>
-    </aside>
-  </div>
-</div>
-
-{% endblock %}
-            wrote:
-          </p>
-          <div id="comment{{ comment.id }}">
-            {{ comment.body | linebreaks }}
-          </div>
+        <hr>
+        <h4>Comments</h4>
+        {% for comment in comments %}
+        <div class="mb-3">
+          <h6 class="mb-0">{{ comment.name }}</h6>
+          <p class="text-muted small">{{ comment.created_on|naturaltime }}</p>
+          <div>{{ comment.body|linebreaks }}</div>
           {% if not comment.approved and comment.author == user %}
-          <p class="approval">This comment is awaiting approval</p>
+            <p class="approval">This comment is awaiting approval</p>
           {% endif %}
         </div>
-        <!-- Our for loop ends here -->
+        {% empty %}
+        <p>No comments yet.</p>
         {% endfor %}
-      </div>
-    </div>
-    <!-- Creating New Comments -->
-    <div class="col-md-4 card mb-4 mt-3">
-      <div class="card-body">
+
+        <hr>
+        <h4>Leave a comment</h4>
         {% if user.is_authenticated %}
-        <h3>Leave a comment:</h3>
-        <p>Posting as: {{ user.username }}</p>
-        <form id="commentForm" method="post" style="margin-top: 1.3em">
-          {{ comment_form | crispy }} {% csrf_token %}
-          <button id="submitButton" type="submit" class="btn btn-signup btn-lg">
-            Submit
-          </button>
+        <form method="post">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <button type="submit" class="btn btn-primary mt-2">Submit</button>
         </form>
         {% else %}
-        <p>Log in to leave a comment</p>
+          <p>Please <a href="{% url 'account_login' %}">log in</a> to leave a comment.</p>
         {% endif %}
-      </div>
+      </article>
     </div>
-  </div>
-</div>
 
-{% endblock content %}
+    <aside class="col-lg-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5>About the author</h5>
+          <p>{{ post.author.profile.bio }}</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% endblock %}
