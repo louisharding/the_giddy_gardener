@@ -13,19 +13,48 @@ img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 
-/* CSS variables for quick theming */
+/*
+  style.css — The Giddy Gardener
+  Sections:
+    1. Tokens & Variables
+    2. Reset / Base
+    3. Layout (site-header, site-nav, site-main, site-footer)
+    4. Components
+    5. Patterns (backgrounds, tiled headers/footers)
+    6. Utilities
+
+  Keep presentation in CSS and minimal structure in templates.
+*/
+
+/* 1. Tokens & Variables: central theme values and image tokens
+   Edit these to change the site look without hunting through file. */
 :root {
+  /* Colours */
   --bg: #F9FAFC;
-  --surface: #FFFFFF;
+  --surface: #d844d8;
+  --invis: #ffffff00; /*quickfix to make things invisible*/
   --muted: #6B7280; /* gray */
   --brand: #188181; /* primary */
-  --accent: #E84610; /* orange */
-  --ink: #1F2937; /* dark */
+  --accent: #004d17; /* dark-green */
+  --ink: #1F2937; /* dark-blue */
+  --earth: #301700; /* earth */
+
+  /* Layout tokens */
   --card-radius: 8px;
   --container-width: 1100px;
   --gap-sm: 0.5rem;
   --gap: 1rem;
   --gap-lg: 1.5rem;
+
+  /* Static image tokens (single source-of-truth) */
+  --static-path: '/static/images';
+  --img-header: url('/static/images/header.png');
+  --img-footer: url('/static/images/footer2.png');
+  --img-wood: url('/static/images/wooden_board2.png');
+  --img-stones: url('/static/images/background_stones3.png');
+  --img-favicon: url('/static/images/favicon.png');
+  --img-card: url('/static/images/crop_board.png');
+  --img-button: url('/static/images/slate_tile.png');
 }
 
 /* Base layout */
@@ -39,6 +68,41 @@ body {
 
 .container { max-width: var(--container-width); margin: 0 auto; padding: 0 var(--gap); }
 
+/* Canonical class map (reference)
+   Use these class names across templates for consistent layout and
+   predictable styling. Add the short docstring above templates that use
+   them so future contributors know the intent.
+
+   - `.site-header`  : top decorative header area (tile background)
+   - `.site-nav`     : navigation wrapper (usually contains `.navbar`)
+   - `.site-container`: centered content container (alias of `.container`)
+   - `.site-main`    : primary page content wrapper (main tag)
+   - `.site-footer`  : global footer area (tile + footer content)
+   - `.content-with-wood`: decorative wooden-board accent on left of content
+   - Utility classes: `.u-*` (spacing, text helpers), `.d-inline`, `.me-2`, etc.
+
+   Example usage in templates:
+     <header class="site-header"></header>
+     <nav class="site-nav navbar">...</nav>
+     <main class="site-main site-container">...</main>
+     <footer class="site-footer">...</footer>
+*/
+
+/* Layout aliases: prefer `.site-container` / `.site-header` / `.site-main` etc in templates.
+  These alias the existing helper classes so you can migrate templates gradually. */
+.site-container { max-width: var(--container-width); margin: 0 auto; padding: 0 var(--gap); }
+.site-header { display: block; /* alias - core header area (themed via --img-header) */ }
+.site-nav { display: block; /* alias - navigation container */ }
+.site-main { display: block; /* alias - main content area */ }
+.site-footer { display: block; /* alias - footer area (thematic background applied below) */ }
+
+/* 6. Utilities: small, single-purpose helpers for quick adjustments */
+.u-text-center { text-align: center !important; }
+.u-mt-1 { margin-top: 0.5rem !important; }
+.u-mt-2 { margin-top: 1rem !important; }
+.u-hidden { display: none !important; }
+.u-clearfix::after { content: ""; display: table; clear: both; }
+
 /* Brand */
 .brand { font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--ink); letter-spacing: 0.2px; }
 
@@ -48,7 +112,33 @@ h1 { font-size: 1.75rem; }
 h2 { font-size: 1.25rem; }
 
 /* Cards */
-.card { background: var(--surface); border-radius: var(--card-radius); box-shadow: 0 1px 3px rgba(16,24,40,0.04); padding: var(--gap); }
+.card {
+  background-color: var(--invis);
+  background-image: var(--img-card);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; /* stretch to fill without cropping (may distort aspect ratio) */
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
+  padding: var(--gap);
+  color: #ffe3e4;
+  overflow: hidden; /* ensure corners clip the background */
+}
+
+/* Hero grid used on the landing page */
+.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; background: var(--bg); }
+.hero-grid .hero-list { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem; }
+.hero-card { position:relative; display:block; text-decoration:none; }
+.hero-card img { width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
+.hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem; }
+
+/* Crop detail layout */
+.crop-card { background: var(--surface); border-radius: 8px; padding: var(--gap); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.crop-body { display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; }
+.crop-image { flex: 0 0 320px; }
+.crop-image img { width:100%; height:auto; border-radius:4px; }
+.crop-info { flex:1; }
+.actions { margin-top:1rem; }
 
 /* Masthead / hero */
 .masthead { position: relative; overflow: hidden; height: 32vh; display: block; }
@@ -61,6 +151,14 @@ h2 { font-size: 1.25rem; }
 .link:hover { color: var(--ink); text-decoration: underline; }
 
 /* Buttons (keep bootstrap defaults but add small utility) */
+.btn, button, input[type="submit"], input[type="button"] {
+  background-image: var(--img-button);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  overflow: hidden;
+  border: none;
+}
 .btn-signup, .btn-edit { background-color: var(--brand); color: #fff; border: none; padding: 0.45rem 0.75rem; border-radius: 6px; }
 .btn-signup:hover { opacity: 0.95; }
 .btn-delete { background: var(--accent); color: #fff; border: none; padding: 0.35rem 0.6rem; border-radius: 6px; }
@@ -95,8 +193,33 @@ form button { cursor: pointer; }
 .nav-fa { display: inline-flex; align-items: center; justify-content: center; width:34px; height:34px; font-size:18px; }
 
 /* Footer */
-.footer { background: var(--ink); color: #fff; }
-.footer p { margin: 0.25rem 0; }
+.footer {background-image: url('/static/images/footer_soil.png');} 
+/* .footer { background: var(--earth); color: #fff; } */
+/* .footer p { margin: 0.25rem 0; } */
+
+/* Decorative header & footer using repeated PNG tiles
+   Uses files in `/static/images/` (header.png, footer.png).
+   Use absolute static URLs so paths remain valid after collectstatic
+   and on case-sensitive production hosts. */
+.site-header {
+  display: block;
+  width: 100%;
+  min-height: 68px;
+  height: auto;
+  background-image: url('/static/images/header.png');
+  background-repeat: repeat-x; /* repeat horizontally across the top */
+  background-position: top center;
+  background-size: auto 68px;
+}
+
+.site-footer {
+  /* keep existing footer color for text contrast, but apply tile behind */
+  background-image: url('/static/images/footer2.png');
+  background-repeat: repeat-x; /* repeat horizontally */
+  background-position: center bottom;
+  background-size: auto 100%;
+  padding-top: 8px; /* ensure footer has some height so tile is visible */
+}
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
@@ -108,7 +231,50 @@ form button { cursor: pointer; }
 .post-title { margin-top: 1rem; }
 .post-subtitle { color: var(--muted); }
 
+/* Content accent: wooden boards side background
+   - Use by adding the class `content-with-wood` to a page container (for example
+     `<main class="content-with-wood container">` or `<div class="container content-with-wood">`).
+   - The wooden board image is repeated vertically and sized to at most 20% of the viewport
+     width using `clamp()` to provide sensible min/max bounds.
+   - The rule adds left padding equal to the visual size so the image does not overlap text.
+*/
+.content-with-wood {
+  /*--wood-width: clamp(80px, 20vw, 280px); /* min 80px, preferred 20vw, max 280px */
+  /* background-image: url('/static/images/wooden_board2.png'); */
+  background-image: var(--img-wood);
+  background-repeat: repeat-y;
+  background-position: left center;
+  background-size: var(--wood-width) auto; 
+  background-attachment: scroll;
+  /* keep background behind content and provide space for it */
+  padding-left: calc(var(--wood-width) + 1rem);
+  /* optional gentle background color for the content area */
+  background-color: var(--surface);
+}
+
+/* On small screens, remove the wooden accent to preserve space */
+@media (max-width: 768px) {
+  .content-with-wood {
+    background-image: none;
+    padding-left: 0.75rem;
+  }
+}
+/* Use your new file stored at static/images/background_stones.png */
+.main-bg {
+  background-color: var(--bg); /* fallback */
+  background-image: url('/static/images/background_stones3.png');
+  background-repeat: repeat;            /* tile in both directions */
+  background-position: top left;
+  background-attachment: scroll;        /* or `fixed` for parallax-like feel */
+  background-size: 25%;
+}
 /* Accessibility helpers */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+
+
+
+
+
 
 /* End of stylesheet */

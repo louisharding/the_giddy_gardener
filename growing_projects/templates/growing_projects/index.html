@@ -1,18 +1,19 @@
 {% extends "base.html" %}
+{# growing_projects/index.html — Crop catalogue and search. Renders inside `base.html`'s `.site-container`. #}
 {% block content %}
 
-<div class="container mt-3">
+<section class="site-container mt-3">
   <h1>Crops</h1>
 
-  <form method="get" class="mb-3" action="">
-    <input type="search" name="q" placeholder="Search crops..." value="{{ request.GET.q }}">
-    <select name="type">
+  <form method="get" class="mb-3 form-inline" action="">
+    <input type="search" name="q" class="form-control me-2" placeholder="Search crops..." value="{{ request.GET.q }}">
+    <select name="type" class="form-select me-2">
       <option value="">All types</option>
       {% for code, label in view.model.TYPE_CHOICES %}
         <option value="{{ code }}" {% if request.GET.type == code %}selected{% endif %}>{{ label }}</option>
       {% endfor %}
     </select>
-    <button type="submit">Search</button>
+    <button type="submit" class="btn btn-secondary">Search</button>
   </form>
 
   <div class="row">
@@ -24,7 +25,7 @@
             <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
             <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
           </div>
-          <form method="post" action="{% url 'growing_projects:add_crop_to_garden' %}" style="display:inline;">
+          <form method="post" action="{% url 'growing_projects:add_crop_to_garden' %}" class="d-inline">
             {% csrf_token %}
             <input type="hidden" name="crop_id" value="{{ crop.pk }}">
             <button type="submit" class="btn btn-sm btn-outline-primary">Add to my garden</button>
@@ -62,6 +63,6 @@
     </nav>
   {% endif %}
 
-</div>
+</section>
 
 {% endblock %}

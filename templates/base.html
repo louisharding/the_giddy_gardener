@@ -1,4 +1,5 @@
-{% load static %} {% url 'growing_projects:home' as home_url %}
+{% load static %} 
+{% url 'growing_projects:home' as home_url %}
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
@@ -26,48 +27,48 @@
 </head>
 
 <body class="d-flex flex-column h-100 main-bg">
+  <!-- Decorative repeated PNG header -->
+  <div class="site-header" role="banner" aria-hidden="true"></div>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container-fluid">
-      <div class="d-flex align-items-center w-100">
-        <!-- Left: image links -->
-        <div class="d-flex align-items-center" style="gap:0.75rem;">
-          <a href="/blogs/" title="Blogs" class="nav-icon" aria-label="Blogs">
-            <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-blog nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">Blogs</span>
+      <div class="site-container">
+        <div class="d-flex align-items-center w-100">
+          <!-- Left: image links -->
+          <div class="d-flex align-items-center" style="gap:0.75rem;">
+            <a href="/blogs/" title="Blogs" class="nav-icon" aria-label="Blogs">
+              <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+              <i class="fas fa-blog nav-fa" aria-hidden="true" style="display:none;"></i>
+              <span class="sr-only">Blogs</span>
+            </a>
+            <a href="{% url 'growing_projects:crops' %}" title="Crops" class="nav-icon" aria-label="Crops">
+              <img src="{% static 'images/crops_icon.png' %}" alt="Crops" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+              <i class="fas fa-seedling nav-fa" aria-hidden="true" style="display:none;"></i>
+              <span class="sr-only">Crops</span>
+            </a>
+            <a href="{% url 'growing_projects:my_garden' %}" title="My Garden" class="nav-icon" aria-label="My Garden">
+              <img src="{% static 'images/my_garden.png' %}" alt="My Garden" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+              <i class="fas fa-tree nav-fa" aria-hidden="true" style="display:none;"></i>
+              <span class="sr-only">My Garden</span>
+            </a>
+          </div>
+          <!-- Center: brand -->
+          <a class="navbar-brand mx-auto text-center" href="{% url 'growing_projects:home' %}">
+            <span class="brand">The Giddy Gardener</span>
           </a>
-          <a href="{% url 'growing_projects:crops' %}" title="Crops" class="nav-icon" aria-label="Crops">
-            <img src="{% static 'images/crops_icon.png' %}" alt="Crops" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-seedling nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">Crops</span>
-          </a>
-          <a href="{% url 'growing_projects:my_garden' %}" title="My Garden" class="nav-icon" aria-label="My Garden">
-            <img src="{% static 'images/my_garden.png' %}" alt="My Garden" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-tree nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">My Garden</span>
-          </a>
-        </div>
-
-        <!-- Center: brand -->
-        <a class="navbar-brand mx-auto text-center" href="{% url 'growing_projects:home' %}">
-          <span class="brand">The Giddy Gardener</span>
-        </a>
-
-        <!-- Right: auth -->
-        <div class="d-flex align-items-center" style="gap:0.5rem;">
-          <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
-            {% csrf_token %}
-            {% if user.is_authenticated %}
-            <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
-            <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-            {% else %}
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
-            {% endif %}
-          </form>
+          <!-- Right: auth -->
+          <div class="d-flex align-items-center" style="gap:0.5rem;">
+            <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+              <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
+              <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+              {% else %}
+              <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
+              {% endif %}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
   </nav>
   {% if messages %}
   <div class="container mt-2">
@@ -76,20 +77,19 @@
     {% endfor %}
   </div>
   {% endif %}
-  <main class="flex-shrink-0 main-bg">
-    {% block content %}
-    <!-- Content Goes here -->
-    {% endblock content %}
+  <main class="site-main flex-shrink-0">
+    <div class="site-container content-with-wood">
+      {% block content %}
+      <!-- Content Goes here -->
+      {% endblock content %}
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer mt-auto py-3 dark-bg">
-    <p class="m-0 text-center text-white">123</p>
-    <p class="m-0 text-center text-white">
-      Follow us: <i class="fab fa-facebook-square ms-3"></i>
-      <i class="fab fa-instagram-square ms-3"></i>
-      <i class="fab fa-youtube-square ms-3"></i>
-    </p>
+  <!-- Footer with repeated PNG tile background -->
+  <footer class="site-footer footer mt-auto py-5">
+    <div class="site-container">
+      <!-- Footer content (move page-specific footer items here) -->
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
