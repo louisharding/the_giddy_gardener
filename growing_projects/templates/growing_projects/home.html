@@ -11,17 +11,17 @@
         <div style="display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem;">
             <!-- Simple overlay captions: minimal inline styles for clarity -->
             <a href="{% url 'blog:post_list' %}" aria-label="Go to User Blogs" style="display:block; text-decoration:none; position:relative;">
-                <img src="{% static 'images/tater.png' %}" alt="User Blogs" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
+                <img src="{% static 'images/blog_icon.png' %}" alt="User Blogs" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
                 <span style="position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem;">User Blogs</span>
             </a>
 
             <a href="{% url 'growing_projects:crops' %}" aria-label="Go to Crops" style="display:block; text-decoration:none; position:relative;">
-                <img src="{% static 'images/mushroom.png' %}" alt="Crops" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
+                <img src="{% static 'images/crops_icon.png' %}" alt="Crops" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
                 <span style="position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem;">Crops</span>
             </a>
 
             <a href="{% url 'growing_projects:my_garden' %}" aria-label="Go to my Garden" style="display:block; text-decoration:none; position:relative;">
-                <img src="{% static 'images/apple.png' %}" alt="My Garden" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
+                <img src="{% static 'images/my_garden.png' %}" alt="My Garden" style="width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block;">
                 <span style="position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem;">My Garden</span>
             </a>
         </div>
