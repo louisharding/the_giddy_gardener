@@ -21,8 +21,8 @@
   <!-- Custom CSS-->
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <!-- Favicon -->
-  <link rel="icon" href="{% static 'images/favicon.jpg' %}" type="image/jpeg" />
-  <link rel="shortcut icon" href="{% static 'images/favicon.jpg' %}" type="image/jpeg" />
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png" />
 </head>
 
 <body class="d-flex flex-column h-100 main-bg">
@@ -31,15 +31,21 @@
     <div class="container-fluid">
       <div class="d-flex align-items-center w-100">
         <!-- Left: image links -->
-        <div class="d-flex align-items-center" style="gap:0.5rem;">
-          <a href="/blogs/" title="Blogs">
-            <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" width="34" height="34" />
+        <div class="d-flex align-items-center" style="gap:0.75rem;">
+          <a href="/blogs/" title="Blogs" class="nav-icon" aria-label="Blogs">
+            <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+            <i class="fas fa-blog nav-fa" aria-hidden="true" style="display:none;"></i>
+            <span class="sr-only">Blogs</span>
           </a>
-          <a href="{% url 'growing_projects:crops' %}" title="Crops">
-            <img src="{% static 'images/crops_icon.png' %}" alt="Crops" width="34" height="34" />
+          <a href="{% url 'growing_projects:crops' %}" title="Crops" class="nav-icon" aria-label="Crops">
+            <img src="{% static 'images/crops_icon.png' %}" alt="Crops" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+            <i class="fas fa-seedling nav-fa" aria-hidden="true" style="display:none;"></i>
+            <span class="sr-only">Crops</span>
           </a>
-          <a href="{% url 'growing_projects:my_garden' %}" title="My Garden">
-            <img src="{% static 'images/my_garden.png' %}" alt="My Garden" width="34" height="34" />
+          <a href="{% url 'growing_projects:my_garden' %}" title="My Garden" class="nav-icon" aria-label="My Garden">
+            <img src="{% static 'images/my_garden.png' %}" alt="My Garden" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
+            <i class="fas fa-tree nav-fa" aria-hidden="true" style="display:none;"></i>
+            <span class="sr-only">My Garden</span>
           </a>
         </div>
 
