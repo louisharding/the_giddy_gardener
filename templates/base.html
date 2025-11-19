@@ -77,6 +77,11 @@
   {% endif %}
   <main class="site-main flex-shrink-0">
     <div class="site-container content-with-wood">
+      <!-- Optional per-page header (summary / overview area) -->
+      <div class="page-header">
+        {% block page_header %}{% endblock page_header %}
+      </div>
+
       {% block content %}
       <!-- Content Goes here -->
       {% endblock content %}

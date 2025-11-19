@@ -21,9 +21,9 @@
         <div class="crop-body">
             <div class="crop-image">
                 {% if crop.image %}
-                    <img src="{{ crop.image.url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" style="width:100%;height:auto;border-radius:4px;">
+                    <img src="{{ crop.image.url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" class="img-fluid rounded">
                 {% else %}
-                    <img src="{% static 'images/default.jpg' %}" alt="No image available" style="width:100%;height:auto;border-radius:4px;">
+                    <img src="{% static 'images/default.jpg' %}" alt="No image available" class="img-fluid rounded">
                 {% endif %}
             </div>
 
@@ -52,7 +52,7 @@
                     {% endif %}
 
                     {% if user.is_authenticated and perms.growing_projects.delete_crop %}
-                        <form action="{% url 'growing_projects:crop_delete' crop.id %}" method="post" style="display:inline;">
+                        <form action="{% url 'growing_projects:crop_delete' crop.id %}" method="post" class="d-inline">
                             {% csrf_token %}
                             <button type="submit" class="btn danger">Delete</button>
                         </form>
