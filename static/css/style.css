@@ -4,6 +4,7 @@
   - Keeps existing class names used by templates but normalises layout
   - Ready for you to tweak variables at the top
 */
+@import url('https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap');
 
 /* Reset / Normalize (minimal) */
 *, *::before, *::after { box-sizing: border-box; }
@@ -27,7 +28,7 @@ button { font: inherit; }
 */
 
 /* 1. Tokens & Variables: central theme values and image tokens
-   Edit these to change the site look without hunting through file. */
+  Edit these to change the site look without hunting through file. */
 :root {
   /* Colours */
   --bg: #F9FAFC;
@@ -61,7 +62,8 @@ button { font: inherit; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: Roboto, Lato, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+  /* Use Coming Soon across the site first, then fall back to the previous stack */
+  font-family: "Coming Soon", Roboto, Lato, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
@@ -274,7 +276,19 @@ form button { cursor: pointer; }
 
 
 
+.kranky-regular {
+  font-family: "Kranky", serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+
+
+.coming-soon-regular {
+  font-family: "Coming Soon", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 
 
 /* End of stylesheet */
