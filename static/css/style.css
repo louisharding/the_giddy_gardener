@@ -43,6 +43,7 @@ button { font: inherit; }
   /* Layout tokens */
   --card-radius: 8px;
   --container-width: 1100px;
+  --header-height: 68px;
   --gap-sm: 0.5rem;
   --gap: 1rem;
   --gap-lg: 1.5rem;
@@ -128,10 +129,10 @@ h2 { font-size: 1.25rem; }
 }
 
 /* Hero grid used on the landing page */
-.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; background: var(--bg); }
+.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; }
 .hero-grid .hero-list { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem; }
 .hero-card { position:relative; display:block; text-decoration:none; }
-.hero-card img { width:300px; max-width:100%; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
+.hero-card img { width:300px; max-width:100%; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
 .hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem; }
 
 /* Crop detail layout */
@@ -204,15 +205,26 @@ form button { cursor: pointer; }
    Use absolute static URLs so paths remain valid after collectstatic
    and on case-sensitive production hosts. */
 .site-header {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
-  min-height: 68px;
+  min-height: var(--header-height);
+  padding: 0.35rem 0;
   height: auto;
-  background-image: url('/static/images/header.png');
+  background-image: var(--img-header);
   background-repeat: repeat-x; /* repeat horizontally across the top */
   background-position: top center;
-  background-size: auto 68px;
+  background-size: auto var(--header-height);
+  background-color: transparent;
 }
+
+/* Tweak navbar elements when inside the tiled header so links are legible */
+.site-header .navbar-brand,
+.site-header .nav-link,
+.site-header .nav-icon,
+.site-header .navbar-text { color: var(--ink) !important; }
+.site-header .navbar { background: transparent; box-shadow: none; }
+.site-header .nav-icon { background: transparent; }
 
 .site-footer {
   /* keep existing footer color for text contrast, but apply tile behind */
