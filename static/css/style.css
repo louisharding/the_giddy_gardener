@@ -172,7 +172,7 @@ h2 { font-size: 1.25rem; }
   border-radius: var(--card-radius);
   box-shadow: 0 1px 3px rgba(16,24,40,0.04);
   padding: var(--gap);
-  color: #ffe3e4;
+  color: #ffffff;
   overflow: hidden; /* ensure corners clip the background */
 }
 
@@ -217,7 +217,7 @@ h2 { font-size: 1.25rem; }
 
 /* Small utilities */
 .thin { font-weight: 300; }
-.faded { color: var(--muted); }
+.faded { color: rgba(255,255,255,0.9); }
 .red-o { color: var(--accent); }
 .dark-bg { background: #445261; }
 .light-bg { background: #fff; }
