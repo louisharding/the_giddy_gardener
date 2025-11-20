@@ -66,6 +66,8 @@ class Crop(models.Model):
 
     # Life cycle; how the crop grows, matures and yields throughout it's life
     life_cycle = models.CharField(max_length=50, choices=LIFE_CYCLE_CHOICES, null=True, blank=True)
+    # Image for the crop (optional). Files stored under MEDIA_ROOT/crops/
+    image = models.ImageField(upload_to='crops/', null=True, blank=True)
     # Sowing & Harvesting ranges; the earliest and latest a crop can be sown and harvested
     sowing_date_earliest = models.DateField(null=True, blank=True)
     sowing_date_latest = models.DateField(null=True, blank=True)

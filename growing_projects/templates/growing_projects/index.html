@@ -34,6 +34,9 @@
     {% for crop in crop_list %}
     <div class="col-md-4 mb-3">
       <div class="card">
+        {% if crop.image %}
+        <img src="{{ crop.image.url }}" alt="{{ crop.common_name }}" class="card-img-top" style="height:160px; object-fit:cover; width:100%; border-top-left-radius:8px; border-top-right-radius:8px;" />
+        {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
           <p class="card-text"><em>{{ crop.scientific_name }}</em></p>

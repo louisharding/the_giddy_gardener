@@ -227,6 +227,16 @@ h2 { font-size: 1.25rem; }
 .image-container { position: relative; display: block; }
 .image-flash { position: absolute; bottom: 6%; left: 0; background: var(--accent); color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; }
 
+/* Crop thumbnail used in crop cards to keep thumbnails consistent */
+.crop-thumb, .card-img-top.crop-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+}
+
 /* Forms */
 form input[type="search"], form input[type="text"], form select, form textarea { width: 100%; padding: 0.5rem; border: 1px solid #e6e9ee; border-radius: 6px; background: #fff; }
 form button { cursor: pointer; }
