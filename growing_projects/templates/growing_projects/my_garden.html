@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 {# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
-{% if user.is_authenticated %}
-  {% block page_header %}
-    <h1>{{ garden.owner }}'s Garden</h1>
-    <h1>Crops in your garden</h1>
-    <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
-      {% csrf_token %}
-      {{ add_form.as_p }}
-      <button type="submit" class="btn btn-primary">Add crop</button>
-    </form>
-  {% endblock page_header %}
-{% endif %}
+
+
+    {%block page_header %}
+      {% if user.is_authenticated %}
+      <h1>{{ garden.owner }}'s Garden</h1>
+      <h1>Crops in your garden</h1>
+      <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
+        {% csrf_token %}
+        {{ add_form.as_p }}
+        <button type="submit" class="btn btn-primary">Add crop</button>
+      </form>
+      {% else %}
+      <h1>This could be your Garden!</h1>
+      <p class="mb-3">You need to be logged in to view and manage your garden.</p>
+      {% endif %}
+    {% endblock page_header %}
+
+
 
 {% block content %}
+
 {% if user.is_authenticated %}
 
 <section class="site-container mt-3">

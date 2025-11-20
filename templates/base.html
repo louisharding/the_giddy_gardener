@@ -30,38 +30,30 @@
   <!-- Combined decorative header + navigation (uses tile image from --img-header) -->
   <header class="site-header navbar navbar-expand-lg" role="banner">
     <div class="site-container">
-      <div class="d-flex align-items-center w-100">
-        <!-- Left: image links -->
-        <div class="d-flex align-items-center" style="gap:0.75rem;">
-          <a href="/blogs/" title="Blogs" class="nav-icon" aria-label="Blogs">
-            <img src="{% static 'images/blog_icon.png' %}" alt="Blogs" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-blog nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">Blogs</span>
-          </a>
-          <a href="{% url 'growing_projects:crops' %}" title="Crops" class="nav-icon" aria-label="Crops">
-            <img src="{% static 'images/crops_icon.png' %}" alt="Crops" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-seedling nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">Crops</span>
-          </a>
-          <a href="{% url 'growing_projects:my_garden' %}" title="My Garden" class="nav-icon" aria-label="My Garden">
-            <img src="{% static 'images/my_garden.png' %}" alt="My Garden" class="nav-img" width="34" height="34" onerror="this.style.display='none'; this.parentElement.querySelector('.nav-fa').style.display='inline-flex'">
-            <i class="fas fa-tree nav-fa" aria-hidden="true" style="display:none;"></i>
-            <span class="sr-only">My Garden</span>
-          </a>
+      <div class="d-flex align-items-center w-100 header-row">
+        <!-- Left region -->
+        <div class="header-left d-flex align-items-center">
+          <a href="{% url 'growing_projects:home' %}" class="btn btn-signup btn-sm header-btn" aria-label="Home">Home</a>
         </div>
-        <!-- Center: brand -->
-        <a class="navbar-brand mx-auto text-center" href="{% url 'growing_projects:home' %}">
-          <span class="brand">The Giddy Gardener</span>
-        </a>
-        <!-- Right: auth -->
-        <div class="d-flex align-items-center" style="gap:0.5rem;">
-          <form method="post" action="{% url 'account_logout' %}" class="d-flex align-items-center" style="gap:0.5rem;">
+
+        <!-- Center region: brand and (optional) username under it -->
+        <div class="header-center d-flex flex-column align-items-center">
+          <a class="navbar-brand text-center" href="{% url 'growing_projects:home' %}">
+            <span class="brand">The Giddy Gardener</span>
+          </a>
+          {% if user.is_authenticated %}
+          <div class="brand-subtext small faded">Hi {{ user.username }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Right region: auth button only -->
+        <div class="header-right d-flex align-items-center justify-content-end">
+          <form method="post" action="{% url 'account_logout' %}">
             {% csrf_token %}
             {% if user.is_authenticated %}
-            <span class="navbar-text text-muted">Logged in as {{ user.username }}</span>
-            <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+            <button type="submit" class="btn btn-signup btn-sm header-btn">Logout</button>
             {% else %}
-            <a class="btn btn-outline-primary btn-sm" href="{% url 'account_login' %}">Log in</a>
+            <a class="btn btn-signup btn-sm header-btn" href="{% url 'account_login' %}">Log in</a>
             {% endif %}
           </form>
         </div>

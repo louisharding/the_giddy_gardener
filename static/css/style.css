@@ -316,7 +316,66 @@ form button { cursor: pointer; }
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
+  overflow: hidden;
+  padding: var(--gap);
 }
+
+/* Header row layout: distribute left/center/right evenly */
+.header-row { display: flex; gap: 1rem; align-items: center; width: 100%; }
+.header-left, .header-center, .header-right { flex: 1 1 0; display: flex; align-items: center; }
+.header-left { justify-content: flex-start; }
+.header-center { justify-content: center; flex-direction: column; gap: 0.15rem; }
+.header-right { justify-content: flex-end; }
+
+/* Brand subtext (username under brand) */
+.brand-subtext { color: var(--muted); font-size: 0.9rem; margin-top: 0.125rem; }
+
+@media (max-width: 768px) {
+  .header-left, .header-right { flex: 0 0 auto; }
+  .header-center { flex: 1 1 auto; }
+  .header-row { gap: 0.5rem; }
+}
+
+/* Header button shared styling: consistent spacing, size and alignment */
+.header-btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+}
+
+/* Slight visual difference for outline buttons to keep their outline look */
+.header-btn.btn-outline-primary,
+.header-btn.btn-outline-secondary {
+  background: transparent;
+  border-width: 1px;
+}
+
+@media (max-width: 576px) {
+  .header-btn { padding: 0.35rem 0.6rem; min-width: 56px; font-size: 0.9rem; }
+}
+
+
+
+
+/* Cards
+.card {
+  background-color: var(--invis);
+  background-image: var(--img-card);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; 
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
+  padding: var(--gap);
+  color: #ffe3e4;
+  overflow: hidden; 
+} 
+*/
+
 
 /* Ensure we don't override explicit card backgrounds inside header (if any) */
 .site-header .site-container .card,
