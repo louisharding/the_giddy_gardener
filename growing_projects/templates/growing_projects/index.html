@@ -1,66 +1,86 @@
 {% extends "base.html" %}
 {# growing_projects/index.html — Crop catalogue and search. Renders inside `base.html`'s `.site-container`. #}
+{% block page_header %}
+<div class="page-header">
+  <div class="lead">
+    <h3>Crops</h3>
+  </div>
+  <div>
+    <form method="get" class="row gx-2 gy-2 align-items-center" action="">
+      <div class="col-auto">
+        <label for="q" class="visually-hidden">Search</label>
+        <input id="q" type="search" name="q" class="form-control form-control-sm" placeholder="Search crops..."
+          value="{{ request.GET.q }}">
+      </div>
+      <div class="col-auto">
+        <label for="type" class="visually-hidden">Type</label>
+        <select id="type" name="type" class="form-select form-select-sm">
+          <option value="">All types</option>
+          {% for code, label in view.model.TYPE_CHOICES %}
+          <option value="{{ code }}"{% if request.GET.type == code %} selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-signup btn-sm">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock page_header %}
+
 {% block content %}
 
 <section class="site-container mt-3">
-  <h1>Crops</h1>
-
-  <form method="get" class="mb-3 form-inline" action="">
-    <input type="search" name="q" class="form-control me-2" placeholder="Search crops..." value="{{ request.GET.q }}">
-    <select name="type" class="form-select me-2">
-      <option value="">All types</option>
-      {% for code, label in view.model.TYPE_CHOICES %}
-        <option value="{{ code }}" {% if request.GET.type == code %}selected{% endif %}>{{ label }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit" class="btn btn-secondary">Search</button>
-  </form>
-
   <div class="row">
     {% for crop in crop_list %}
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
-            <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
-            <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
-          </div>
-          <form method="post" action="{% url 'growing_projects:add_crop_to_garden' %}" class="d-inline">
-            {% csrf_token %}
-            <input type="hidden" name="crop_id" value="{{ crop.pk }}">
-            <button type="submit" class="btn btn-sm btn-outline-primary">Add to my garden</button>
-          </form>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
+          <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
+          <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
         </div>
+        <form method="post" action="{% url 'growing_projects:add_crop_to_garden' %}" class="d-inline">
+          {% csrf_token %}
+          <input type="hidden" name="crop_id" value="{{ crop.pk }}">
+          <button type="submit" class="btn btn-sm btn-outline-primary">Add to my garden</button>
+        </form>
       </div>
+    </div>
     {% empty %}
-      <p>No crops found.</p>
+    <p>No crops found.</p>
     {% endfor %}
   </div>
 
   {% if is_paginated %}
-    <nav aria-label="Page navigation">
-      <ul class="pagination">
-        {% if page_obj.has_previous %}
-          <li class="page-item"><a class="page-link" href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ page_obj.previous_page_number }}">Previous</a></li>
-        {% else %}
-          <li class="page-item disabled"><span class="page-link">Previous</span></li>
-        {% endif %}
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link"
+          href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ page_obj.previous_page_number }}">Previous</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
 
-        {% for num in page_obj.paginator.page_range %}
-          {% if page_obj.number == num %}
-            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-          {% else %}
-            <li class="page-item"><a class="page-link" href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ num }}">{{ num }}</a></li>
-          {% endif %}
-        {% endfor %}
+      {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+      <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% else %}
+      <li class="page-item"><a class="page-link"
+          href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+      {% endfor %}
 
-        {% if page_obj.has_next %}
-          <li class="page-item"><a class="page-link" href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ page_obj.next_page_number }}">Next</a></li>
-        {% else %}
-          <li class="page-item disabled"><span class="page-link">Next</span></li>
-        {% endif %}
-      </ul>
-    </nav>
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link"
+          href="?q={{ request.GET.q }}&type={{ request.GET.type }}&page={{ page_obj.next_page_number }}">Next</a></li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
   {% endif %}
 
 </section>

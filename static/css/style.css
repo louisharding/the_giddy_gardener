@@ -342,7 +342,7 @@ form button { cursor: pointer; }
 .content-with-wood {
   background-image: var(--img-wood);
   /* stretch the wooden board to fill the element horizontally */
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-position: center top;
   background-size: 100% auto; /* stretch horizontally to the element width */
   background-attachment: scroll;
