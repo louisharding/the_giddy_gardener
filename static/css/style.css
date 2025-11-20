@@ -110,7 +110,18 @@ body {
 
 /* Page header/summary area used by templates to show an overview or summary
   placed before the main content. Keep it visually distinct but lightweight. */
-.page-header { margin-bottom: 1rem; padding: 0.75rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.03); }
+.page-header {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  /* border-radius: 8px; */
+    /* decorative parchment background for page headers
+      - use `contain` so the image scales to fit the header without being clipped
+      - keep it centered and non-repeating */
+    background-image: var(--img-parchment);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
 .page-header .lead { margin: 0; color: var(--muted); }
 
 /* Responsive header layout: flow children horizontally on wide screens, stack on small */
