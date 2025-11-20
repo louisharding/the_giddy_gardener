@@ -1,37 +1,62 @@
 {% extends "base.html" %}
-{# blog/index.html — List of posts. Renders inside `base.html`'s `.site-container`. #}
+{% load humanize %}
+
+{# blog/index.html — improved list view: card grid, author & date, truncated excerpt, numbered pagination #}
+
+{% block page_header %}
+  <div class="lead"><h3>Blog</h3></div>
+  <div>
+    <a class="btn btn-outline-alt btn-sm" href="{% url 'growing_projects:home' %}">Home</a>
+  </div>
+{% endblock page_header %}
+
 {% block content %}
-<section class="post-grid site-container mt-3">
-  <div class="row mt-3">
+<section class="post-grid mt-3">
+  <div class="row">
     {% for post in post_list %}
     <div class="col-md-4">
       <article class="card mb-4">
         <div class="card-body">
-          <div class="image-container">
-            <div class="image-flash">
-              <p class="author">Author: {{ post.author }}</p>
-            </div>
-          </div>
           <a href="{% url 'blog:post_detail' post.slug %}" class="post-link">
             <h2 class="card-title">{{ post.title }}</h2>
-            <p class="card-text">{{ post.excerpt }}</p>
           </a>
-          <hr />
-          <p class="card-text text-muted h6">{{ post.created_on }}</p>
+          <p class="faded small">By {{ post.author.get_full_name|default:post.author.username }} · {{ post.created_on|date:"F j, Y" }}</p>
+          <p class="card-text">{% if post.excerpt %}{{ post.excerpt }}{% else %}{{ post.content|truncatewords:30 }}{% endif %}</p>
+          <div class="mt-2 d-flex justify-content-between align-items-center">
+            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-outline-alt btn-sm">Read more</a>
+            <span class="faded small">{{ post.approved_comments }} comments</span>
+          </div>
         </div>
       </article>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p>No posts yet.</p>
     </div>
     {% endfor %}
   </div>
 
   {% if is_paginated %}
-  <nav aria-label="Page navigation">
+  <nav aria-label="Pagination">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
-      <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREVIOUS</a></li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+      </li>
       {% endif %}
+
+      {% for num in paginator.page_range %}
+        {% if num == page_obj.number %}
+          <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}</span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+
       {% if page_obj.has_next %}
-      <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">NEXT &raquo;</a></li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+      </li>
       {% endif %}
     </ul>
   </nav>

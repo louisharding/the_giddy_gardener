@@ -53,7 +53,7 @@ button { font: inherit; }
   --static-path: '/static/images';
   --img-header: url('/static/images/header.png');
   --img-footer: url('/static/images/footer2.png');
-  --img-wood: url('/static/images/wooden_board2.png');
+  --img-wood: url('/static/images/wooden_board3.png');
   --img-stones: url('/static/images/background_stones3.png');
   --img-favicon: url('/static/images/favicon.png');
   --img-card: url('/static/images/crop_board.png');
@@ -169,7 +169,7 @@ h2 { font-size: 1.25rem; }
 .hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; }
 .hero-grid .hero-list { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem; }
 .hero-card { position:relative; display:block; text-decoration:none; }
-.hero-card img { width:300px; max-width:100%; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); display:block; }
+.hero-card img { width:300px; max-width:100%; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0, 0, 0, 0); display:block; }
 .hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem; }
 
 /* Crop detail layout */
@@ -220,6 +220,30 @@ h2 { font-size: 1.25rem; }
 form input[type="search"], form input[type="text"], form select, form textarea { width: 100%; padding: 0.5rem; border: 1px solid #e6e9ee; border-radius: 6px; background: #fff; }
 form button { cursor: pointer; }
 
+/* Uh-oh panel: used for empty / unauthenticated states (parchment background) */
+.uh-oh-panel {
+  background-image: var(--img-parchment);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; /* stretch to fill the panel */
+  padding: 1.5rem 1.25rem 1.75rem 1.25rem;
+  border-radius: 10px;
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  margin: 0 auto;
+}
+
+/* Tweak content inside the uh-oh panel */
+.uh-oh-panel img { display: block; margin: 0 auto 1rem; }
+.uh-oh-panel .faded { color: var(--ink); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.9rem; }
+.uh-oh-panel .btn { min-width: 120px; }
+
+@media (max-width: 576px) {
+  .uh-oh-panel { padding: 1rem; }
+}
+
 /* Navbar small adjustments */
 .navbar { box-shadow: 0 1px 0 rgba(16,24,40,0.03); }
 .navbar .nav-link.active { font-weight: 600; color: var(--brand); }
@@ -261,7 +285,7 @@ form button { cursor: pointer; }
   content: "";
   position: absolute;
   inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  background: var(--header-overlay);
+  background: var(--invis);
   pointer-events: none; /* allow clicks through to nav items */
   z-index: 0;
 }
@@ -316,16 +340,14 @@ form button { cursor: pointer; }
    - The rule adds left padding equal to the visual size so the image does not overlap text.
 */
 .content-with-wood {
-  /*--wood-width: clamp(80px, 20vw, 280px); /* min 80px, preferred 20vw, max 280px */
-  /* background-image: url('/static/images/wooden_board2.png'); */
   background-image: var(--img-wood);
-  background-repeat: repeat-y;
-  background-position: left center;
-  background-size: var(--wood-width) auto; 
+  /* stretch the wooden board to fill the element horizontally */
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% auto; /* stretch horizontally to the element width */
   background-attachment: scroll;
-  /* keep background behind content and provide space for it */
-  padding-left: calc(var(--wood-width) + 1rem);
-  /* optional gentle background color for the content area */
+  /* place content inside with comfortable padding rather than offset left */
+  padding: 1rem;
   background-color: var(--surface);
 }
 
@@ -333,7 +355,7 @@ form button { cursor: pointer; }
 @media (max-width: 768px) {
   .content-with-wood {
     background-image: none;
-    padding-left: 0.75rem;
+    padding: 0.75rem;
   }
 }
 /* Use your new file stored at static/images/background_stones.png */

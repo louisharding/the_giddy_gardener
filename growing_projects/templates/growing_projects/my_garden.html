@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
 {% block content %}
+{% if user.is_authenticated %}
 <section class="site-container mt-3">
 
   <div class="page-header">
@@ -15,28 +17,44 @@
 
   <div class="row">
     {% if garden.crops.exists %}
-    {% for crop in garden.crops.all %}
-    <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
-          <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
-          <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
-        </div>
-        <div class="card-footer">
-          <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
-            {% csrf_token %}
-            <input type="hidden" name="crop_id" value="{{ crop.pk }}">
-            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-          </form>
+      {% for crop in garden.crops.all %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
+            <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
+            <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
+          </div>
+          <div class="card-footer">
+            <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="crop_id" value="{{ crop.pk }}">
+              <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    {% endfor %}
+      {% endfor %}
     {% else %}
-    <p class="mb-3">You haven't added any crops yet.</p>
+      <div class="col-12">
+        <p class="mb-3">You haven't added any crops yet.</p>
+      </div>
     {% endif %}
   </div>
 
 </section>
+{% else %}
+<section class="site-container mt-5">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height:40vh; gap:1rem;">
+    <div class="uh-oh-panel">
+      <img src="{% static 'images/uh-oh-gnome.png' %}" alt="Uh oh!" class="img-fluid mb-3" style="max-width:320px;" />
+      <p class="faded mb-3">You need to be logged in to view and manage your garden.</p>
+      <div class="d-flex justify-content-center" style="gap:0.5rem;">
+        <a class="btn btn-signup" href="{% url 'account_login' %}">Log in</a>
+        <a class="btn btn-signup" href="{% url 'account_signup' %}">Sign up</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 {% endblock %}

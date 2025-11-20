@@ -53,7 +53,7 @@ button { font: inherit; }
   --static-path: '/static/images';
   --img-header: url('/static/images/header.png');
   --img-footer: url('/static/images/footer2.png');
-  --img-wood: url('/static/images/wooden_board2.png');
+  --img-wood: url('/static/images/wooden_board3.png');
   --img-stones: url('/static/images/background_stones3.png');
   --img-favicon: url('/static/images/favicon.png');
   --img-card: url('/static/images/crop_board.png');
@@ -112,6 +112,36 @@ body {
   placed before the main content. Keep it visually distinct but lightweight. */
 .page-header { margin-bottom: 1rem; padding: 0.75rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.03); }
 .page-header .lead { margin: 0; color: var(--muted); }
+
+/* Responsive header layout: flow children horizontally on wide screens, stack on small */
+.page-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.page-header > .lead {
+  flex: 0 0 auto;
+  margin-right: 1rem;
+}
+
+.page-header > div {
+  /* container for actions/forms - allow it to grow and align items */
+  flex: 1 1 auto;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.page-header h3, .page-header .h5 { margin: 0; }
+
+@media (max-width: 768px) {
+  .page-header { flex-direction: column; align-items: stretch; }
+  .page-header > div { justify-content: flex-start; }
+}
 
 /* Brand */
 .brand { font-family: Lato, sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--ink); letter-spacing: 0.2px; }
@@ -231,7 +261,7 @@ form button { cursor: pointer; }
   content: "";
   position: absolute;
   inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  background: var(--header-overlay);
+  background: var(--invis);
   pointer-events: none; /* allow clicks through to nav items */
   z-index: 0;
 }
@@ -245,7 +275,19 @@ form button { cursor: pointer; }
 .site-header .navbar { background: transparent; box-shadow: none; }
 .site-header .nav-icon { background: transparent; }
 
-/* (removed a duplicated decorative tile rule here to prevent the header band appearing twice) */
+/* Apply the parchment tile background only to direct children inside the header container */
+.site-header .site-container > * {
+  background-image: var(--img-parchment);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+/* Ensure we don't override explicit card backgrounds inside header (if any) */
+.site-header .site-container .card,
+.site-header .site-container .crop-card {
+  background-image: var(--img-card) !important;
+}
 
 .site-footer {
   /* keep existing footer color for text contrast, but apply tile behind */

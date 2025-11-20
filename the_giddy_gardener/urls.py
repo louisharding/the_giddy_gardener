@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from . import accounts_views
 
 urlpatterns = [
     path('', include(('growing_projects.urls', 'growing_projects'), namespace='growing_projects')),          # site root handled by growing_projects (namespaced)
     path('admin/', admin.site.urls),
+    # Override the login/signup routes so we can present a combined view
+    path('accounts/login/', accounts_views.login_or_signup, name='account_login'),
+    path('accounts/signup/', accounts_views.login_or_signup, name='account_signup'),
     path('accounts/', include('allauth.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('blogs/', include(('blog.urls','blog'), namespace='blog')),
