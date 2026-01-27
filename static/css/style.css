@@ -37,7 +37,7 @@ button { font: inherit; }
   --muted: #6B7280; /* gray */
   --brand: #188181; /* primary */
   --accent: #004d17; /* dark-green */
-  --ink: #1F2937; /* dark-blue */
+  --ink: #1F2937; /*dark-blue */
   --earth: #301700; /* earth */
 
   /* Layout tokens */
@@ -160,7 +160,7 @@ body {
 /* Headings */
 h1, h2, h3, h4 { color: var(--ink); margin: 0 0 0.5rem 0; }
 h1 { font-size: 1.75rem; }
-h2 { font-size: 1.25rem; }
+h2 { font-size: 1.25rem; color: var(--bg); }
 
 /* Cards */
 .card {
