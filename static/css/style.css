@@ -209,6 +209,7 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   background-size: 100% 100%;
   overflow: hidden;
   border: none;
+  color: var(--bg);
 }
 .btn-signup, .btn-edit { background-color: var(--brand); color: #fff; border: none; padding: 0.45rem 0.75rem; border-radius: 6px; }
 .btn-signup:hover { opacity: 0.95; }
