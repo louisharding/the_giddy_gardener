@@ -102,11 +102,11 @@ body {
 .site-footer { display: block; /* alias - footer area (thematic background applied below) */ }
 
 /* 6. Utilities: small, single-purpose helpers for quick adjustments */
-.u-text-center { text-align: center !important; }
-.u-mt-1 { margin-top: 0.5rem !important; }
-.u-mt-2 { margin-top: 1rem !important; }
-.u-hidden { display: none !important; }
-.u-clearfix::after { content: ""; display: table; clear: both; }
+/* .u-text-center { text-align: center !important; } */
+/* .u-mt-1 { margin-top: 0.5rem !important; } */
+/* .u-mt-2 { margin-top: 1rem !important; } */
+/* .u-hidden { display: none !important; } */
+/* .u-clearfix::after { content: ""; display: table; clear: both; } */
 
 /* Page header/summary area used by templates to show an overview or summary
   placed before the main content. Keep it visually distinct but lightweight. */
@@ -193,7 +193,7 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 
 /* Masthead / hero */
 .masthead { position: relative; overflow: hidden; height: 32vh; display: block; }
-.masthead-text { background: var(--ink); color: #fff; padding: 1rem; }
+/* .masthead-text { background: var(--ink); color: #fff; padding: 1rem; } */
 
 /* Links */
 .post-link { color: var(--ink); }
@@ -211,22 +211,22 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   border: none;
   color: var(--bg);
 }
-.btn-signup, .btn-edit { background-color: var(--brand); color: #fff; border: none; padding: 0.45rem 0.75rem; border-radius: 6px; }
-.btn-signup:hover { opacity: 0.95; }
-.btn-delete { background: var(--accent); color: #fff; border: none; padding: 0.35rem 0.6rem; border-radius: 6px; }
-.btn-outline-alt { background: transparent; border: 1px solid rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 6px; }
+.btn-signup, .btn-edit {padding: 0.45rem 0.75rem; border-radius: 6px; }
+.btn-outline-alt { opacity: 0.95; }
+/* .btn-delete { background: var(--accent); color: #fff; padding: 0.35rem 0.6rem; border-radius: 6px; } */
+.btn-outline-alt {border: 1px solid rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 6px; }
 
 /* Small utilities */
-.thin { font-weight: 300; }
+/* .thin { font-weight: 300; } */
 .faded { color: rgba(255,255,255,0.9); }
-.red-o { color: var(--accent); }
-.dark-bg { background: #445261; }
-.light-bg { background: #fff; }
+/* .red-o { color: var(--accent); } */
+/* .dark-bg { background: #445261; } */
+/* .light-bg { background: #fff; } */
 .main-bg { background: var(--bg); }
 
 /* Images */
-.image-container { position: relative; display: block; }
-.image-flash { position: absolute; bottom: 6%; left: 0; background: var(--accent); color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; }
+/* .image-container { position: relative; display: block; } */
+/* .image-flash { position: absolute; bottom: 6%; left: 0; background: var(--accent); color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; } */
 
 /* Crop thumbnail used in crop cards to keep thumbnails consistent */
 .crop-thumb, .card-img-top.crop-thumb {
@@ -275,8 +275,8 @@ form button { cursor: pointer; }
 .nav-icon:hover { color: var(--brand); background: rgba(24,129,129,0.06); text-decoration: none; }
 
 /* image/icon pairing used in navbar: show image when available, fallback to FA icon */
-.nav-img { display: inline-block; width: 34px; height: 34px; object-fit: contain; border-radius: 6px; }
-.nav-fa { display: inline-flex; align-items: center; justify-content: center; width:34px; height:34px; font-size:18px; }
+/* .nav-img { display: inline-block; width: 34px; height: 34px; object-fit: contain; border-radius: 6px; } */
+/* .nav-fa { display: inline-flex; align-items: center; justify-content: center; width:34px; height:34px; font-size:18px; } */
 
 /* Footer */
 .footer {background-image: url('/static/images/footer_soil.png');} 
@@ -450,23 +450,6 @@ form button { cursor: pointer; }
 }
 /* Accessibility helpers */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-
-
-
-
-.kranky-regular {
-  font-family: "Kranky", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-
-.coming-soon-regular {
-  font-family: "Coming Soon", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
 
 
 /* End of stylesheet */
