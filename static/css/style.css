@@ -177,11 +177,11 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 }
 
 /* Hero grid used on the landing page */
-.hero-grid { min-height: 60vh; display:flex; align-items:center; justify-content:center; }
-.hero-grid .hero-list { display:flex; gap:1rem; align-items:center; justify-content:center; flex-wrap:wrap; padding:1rem; }
-.hero-card { position:relative; display:block; text-decoration:none; }
-.hero-card img { width:300px; max-width:100%; object-fit:cover; border-radius:8px; box-shadow:0 2px 6px rgba(0, 0, 0, 0); display:block; }
-.hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff; padding:4px 8px; border-radius:4px; font-size:0.95rem; }
+.hero-grid { min-height: 60vh;}
+.hero-grid .hero-list { display:flex; gap:var(--gap); align-items:center; justify-content:center; flex-wrap:wrap; padding:var(--gap); }
+.hero-card { position:relative;  text-decoration:none; }
+.hero-card img { width:300px; max-width:100%; object-fit:cover; display:block; }
+.hero-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.5); color:#fff;  padding: var(--gap-sm); border-radius:4px; font-size:0.95rem; }
 
 /* Crop detail layout */
 .crop-card { background: var(--surface); border-radius: 8px; padding: var(--gap); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
@@ -212,9 +212,8 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   color: var(--bg);
 }
 .btn-signup, .btn-edit {padding: 0.45rem 0.75rem; border-radius: 6px; }
-.btn-outline-alt { opacity: 0.95; }
 /* .btn-delete { background: var(--accent); color: #fff; padding: 0.35rem 0.6rem; border-radius: 6px; } */
-.btn-outline-alt {border: 1px solid rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 6px; }
+.btn-outline-alt {opacity: 0.95; border: 1px solid rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 6px; }
 
 /* Small utilities */
 /* .thin { font-weight: 300; } */
