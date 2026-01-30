@@ -113,25 +113,18 @@ body {
 .page-header {
   margin-bottom: 1rem;
   padding: 0.75rem 1rem;
-  /* border-radius: 8px; */
-    /* decorative parchment background for page headers
-      - use `contain` so the image scales to fit the header without being clipped
-      - keep it centered and non-repeating */
-    background-image: var(--img-parchment);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-}
-.page-header .lead { margin: 0; color: var(--muted); }
-
-/* Responsive header layout: flow children horizontally on wide screens, stack on small */
-.page-header {
+  border-radius: 1rem;
+  background-image: var(--img-parchment);
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  box-shadow: 3px 3px 10px black;
 }
+.page-header .lead {color: var(--muted); }
 
 .page-header > .lead {
   flex: 0 0 auto;
@@ -210,6 +203,7 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   overflow: hidden;
   border: none;
   color: var(--bg);
+
 }
 .btn-signup, .btn-edit {padding: 0.45rem 0.75rem; border-radius: 6px; }
 /* .btn-delete { background: var(--accent); color: #fff; padding: 0.35rem 0.6rem; border-radius: 6px; } */
@@ -238,9 +232,21 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 }
 
 /* Forms */
-form input[type="search"], form input[type="text"], form select, form textarea { width: 100%; padding: 0.5rem; border: 1px solid #e6e9ee; border-radius: 6px; background: #fff; }
-form button { cursor: pointer; }
+form input[type="search"],
+form input[type="text"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e6e9ee;
+  border-radius: 6px;
+  background: #fff;
+    box-shadow: 1px 1px 5px black;
+}
 
+form button {
+  cursor: pointer;
+}
 /* Uh-oh panel: used for empty / unauthenticated states (parchment background) */
 .uh-oh-panel {
   background-image: var(--img-parchment);
