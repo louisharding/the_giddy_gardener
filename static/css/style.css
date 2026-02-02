@@ -124,7 +124,7 @@ body {
   flex-wrap: wrap;
   box-shadow: 3px 3px 10px black;
 }
-.page-header .lead {color: var(--muted); }
+
 
 .page-header > .lead {
   flex: 0 0 auto;
@@ -145,6 +145,10 @@ body {
 @media (max-width: 768px) {
   .page-header { flex-direction: column; align-items: stretch; }
   .page-header > div { justify-content: flex-start; }
+}
+
+.page-header:empty {
+  display: none; /* Auto-hide if no content */
 }
 
 /* Brand */
@@ -409,8 +413,8 @@ form button {
   background-attachment: scroll;
   /* place content inside with comfortable padding rather than offset left */
   padding: 1rem;
-  background-color: var(--surface);
   box-shadow: 3px 3px 40px 5px;
+  border-radius: 2rem;
 }
 
 /* On small screens, remove the wooden accent to preserve space */
