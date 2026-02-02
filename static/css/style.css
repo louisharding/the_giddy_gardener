@@ -120,7 +120,7 @@ body {
   display: flex;
   gap: 1rem;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   box-shadow: 3px 3px 10px black;
 }
@@ -279,14 +279,8 @@ form button {
 .nav-icon { color: var(--muted); display: inline-flex; align-items: center; justify-content: center; width:36px; height:36px; font-size:18px; border-radius:6px; }
 .nav-icon:hover { color: var(--brand); background: rgba(24,129,129,0.06); text-decoration: none; }
 
-/* image/icon pairing used in navbar: show image when available, fallback to FA icon */
-/* .nav-img { display: inline-block; width: 34px; height: 34px; object-fit: contain; border-radius: 6px; } */
-/* .nav-fa { display: inline-flex; align-items: center; justify-content: center; width:34px; height:34px; font-size:18px; } */
-
 /* Footer */
 .footer {background-image: url('/static/images/footer_soil.png');} 
-/* .footer { background: var(--earth); color: #fff; } */
-/* .footer p { margin: 0.25rem 0; } */
 
 /* Decorative header & footer using repeated PNG tiles
    Uses files in `/static/images/` (header.png, footer.png).
@@ -374,25 +368,6 @@ form button {
   .header-btn { padding: 0.35rem 0.6rem; min-width: 56px; font-size: 0.9rem; }
 }
 
-
-
-
-/* Cards
-.card {
-  background-color: var(--invis);
-  background-image: var(--img-card);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%; 
-  border-radius: var(--card-radius);
-  box-shadow: 0 1px 3px rgba(16,24,40,0.04);
-  padding: var(--gap);
-  color: #ffe3e4;
-  overflow: hidden; 
-} 
-*/
-
-
 /* Ensure we don't override explicit card backgrounds inside header (if any) */
 .site-header .site-container .card,
 .site-header .site-container .crop-card {
@@ -435,6 +410,7 @@ form button {
   /* place content inside with comfortable padding rather than offset left */
   padding: 1rem;
   background-color: var(--surface);
+  box-shadow: 3px 3px 40px 5px;
 }
 
 /* On small screens, remove the wooden accent to preserve space */

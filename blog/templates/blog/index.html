@@ -4,10 +4,7 @@
 {# blog/index.html — improved list view: card grid, author & date, truncated excerpt, numbered pagination #}
 
 {% block page_header %}
-  <div class="lead"><h3>Blog</h3></div>
-  <div>
-    <a class="btn btn-outline-alt btn-sm" href="{% url 'growing_projects:home' %}">Home</a>
-  </div>
+  <div class="lead"><h3>Blogs</h3></div>
 {% endblock page_header %}
 
 {% block content %}
@@ -23,8 +20,8 @@
           <p class="faded small">By {{ post.author.get_full_name|default:post.author.username }} · {{ post.created_on|date:"F j, Y" }}</p>
           <p class="card-text">{% if post.excerpt %}{{ post.excerpt }}{% else %}{{ post.content|truncatewords:30 }}{% endif %}</p>
           <div class="mt-2 d-flex justify-content-between align-items-center">
-            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-outline-alt btn-sm">Read more</a>
             <span class="faded small">{{ post.approved_comments }} comments</span>
+            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-outline-alt btn-sm">Read more</a>
           </div>
         </div>
       </article>
