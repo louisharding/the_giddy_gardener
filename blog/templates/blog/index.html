@@ -12,19 +12,7 @@
   <div class="row">
     {% for post in post_list %}
     <div class="col-md-4">
-      <article class="card mb-4">
-        <div class="card-body">
-          <a href="{% url 'blog:post_detail' post.slug %}" class="post-link">
-            <h2 class="card-title">{{ post.title }}</h2>
-          </a>
-          <p class="faded small">By {{ post.author.get_full_name|default:post.author.username }} · {{ post.created_on|date:"F j, Y" }}</p>
-          <p class="card-text">{% if post.excerpt %}{{ post.excerpt }}{% else %}{{ post.content|truncatewords:30 }}{% endif %}</p>
-          <div class="mt-2 d-flex justify-content-between align-items-center">
-            <span class="faded small">{{ post.approved_comments }} comments</span>
-            <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-outline-alt btn-sm">Read more</a>
-          </div>
-        </div>
-      </article>
+      {% include "components/card_blog.html" %}
     </div>
     {% empty %}
     <div class="col-12">

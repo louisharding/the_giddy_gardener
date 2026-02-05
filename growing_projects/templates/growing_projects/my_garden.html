@@ -3,20 +3,20 @@
 {# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
 
 
-    {%block page_header %}
-      {% if user.is_authenticated %}
-      <h1>{{ garden.owner }}'s Garden</h1>
-      <h1>Crops in your garden</h1>
-      <form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
-        {% csrf_token %}
-        {{ add_form.as_p }}
-        <button type="submit" class="btn btn-primary">Add crop</button>
-      </form>
-      {% else %}
-      <h1>This could be your Garden!</h1>
-      <p class="mb-3">You need to be logged in to view and manage your garden.</p>
-      {% endif %}
-    {% endblock page_header %}
+{%block page_header %}
+{% if user.is_authenticated %}
+<h1>{{ garden.owner }}'s Garden</h1>
+<h1>Crops in your garden</h1>
+<form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
+  {% csrf_token %}
+  {{ add_form.as_p }}
+  <button type="submit" class="btn btn-primary">Add crop</button>
+</form>
+{% else %}
+<h1>This could be your Garden!</h1>
+<p class="mb-3">You need to be logged in to view and manage your garden.</p>
+{% endif %}
+{% endblock page_header %}
 
 
 
@@ -29,20 +29,7 @@
     {% if garden.crops.exists %}
     {% for crop in garden.crops.all %}
     <div class="col-md-4 mb-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
-          <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
-          <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
-        </div>
-        <div class="card-footer">
-          <form method="post" action="{% url 'growing_projects:remove_crop_from_garden' %}" class="d-inline">
-            {% csrf_token %}
-            <input type="hidden" name="crop_id" value="{{ crop.pk }}">
-            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-          </form>
-        </div>
-      </div>
+      {% include "components/card_garden.html" %}
     </div>
     {% endfor %}
     {% else %}

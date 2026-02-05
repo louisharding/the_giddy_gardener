@@ -33,21 +33,7 @@
   <div class="row">
     {% for crop in crop_list %}
     <div class="col-md-4 mb-3">
-      <div class="card">
-        {% if crop.image %}
-        <img src="{{ crop.image.url }}" alt="{{ crop.common_name }}" class="card-img-top" style="height:160px; object-fit:cover; width:100%; border-top-left-radius:8px; border-top-right-radius:8px;" />
-        {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ crop.common_name|default:crop.scientific_name }}</h5>
-          <p class="card-text"><em>{{ crop.scientific_name }}</em></p>
-          <a href="{% url 'growing_projects:crop_detail' crop.id %}">Details</a>
-        </div>
-        <form method="post" action="{% url 'growing_projects:add_crop_to_garden' %}" class="d-inline">
-          {% csrf_token %}
-          <input type="hidden" name="crop_id" value="{{ crop.pk }}">
-          <button type="submit" class="btn btn-sm btn-outline-primary">Add to my garden</button>
-        </form>
-      </div>
+      {% include "components/card_crop.html" %}
     </div>
     {% empty %}
     <p>No crops found.</p>
