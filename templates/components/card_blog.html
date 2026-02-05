@@ -7,7 +7,7 @@
   card_title=post.title
   card_subtitle=subtitle
   card_text=post.excerpt|default:post.content|truncatewords:30
-  footer_meta=post.approved_comments|add:" comments"
+  footer_meta_template="components/meta/comments.html"
   read_more_url=read_more_url
   read_more_label="Read more"
 %}

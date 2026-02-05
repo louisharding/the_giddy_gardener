@@ -4,16 +4,32 @@
 {# blog/index.html — improved list view: card grid, author & date, truncated excerpt, numbered pagination #}
 
 {% block page_header %}
-  <div class="lead"><h3>Blogs</h3></div>
+<div class="lead">
+  <h3>Blogs</h3>
+</div>
 {% endblock page_header %}
 
 {% block content %}
 <section class="post-grid mt-3">
   <div class="row">
     {% for post in post_list %}
+    {% url 'blog:post_detail' post.slug as read_more_url %}
+    {% with author=post.author.get_full_name|default:post.author.username %}
+    {% with date=post.created_on|date:"F j, Y" %}
+    {% with subtitle="By "|add:author|add:" · "|add:date %}
     <div class="col-md-4">
-      {% include "components/card_blog.html" %}
+      {% include "components/card_base.html" with
+        card_title=post.title
+        card_subtitle=subtitle
+        card_text=post.excerpt|default:post.content|truncatewords:30
+        footer_meta_template="components/meta/comments.html"
+        read_more_url=read_more_url
+        read_more_label="Read more"
+      %}
     </div>
+    {% endwith %}
+    {% endwith %}
+    {% endwith %}
     {% empty %}
     <div class="col-12">
       <p>No posts yet.</p>
@@ -32,11 +48,11 @@
       {% endif %}
 
       {% for num in paginator.page_range %}
-        {% if num == page_obj.number %}
-          <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}</span></li>
-        {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-        {% endif %}
+      {% if num == page_obj.number %}
+      <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}</span></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
       {% endfor %}
 
       {% if page_obj.has_next %}

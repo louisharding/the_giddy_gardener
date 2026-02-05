@@ -28,8 +28,27 @@
   <div class="row">
     {% if garden.crops.exists %}
     {% for crop in garden.crops.all %}
+    {% url 'growing_projects:crop_detail' crop.id as read_more_url %}
     <div class="col-md-4 mb-3">
-      {% include "components/card_garden.html" %}
+      {% if crop.image %}
+        {% include "components/card_base.html" with
+          card_title=crop.common_name|default:crop.scientific_name
+          card_subtitle=crop.scientific_name
+          image_url=crop.image.url
+          image_alt=crop.common_name|default:crop.scientific_name
+          read_more_url=read_more_url
+          read_more_label="Read more"
+          secondary_action_template="components/actions/remove_from_garden.html"
+        %}
+      {% else %}
+        {% include "components/card_base.html" with
+          card_title=crop.common_name|default:crop.scientific_name
+          card_subtitle=crop.scientific_name
+          read_more_url=read_more_url
+          read_more_label="Read more"
+          secondary_action_template="components/actions/remove_from_garden.html"
+        %}
+      {% endif %}
     </div>
     {% endfor %}
     {% else %}
