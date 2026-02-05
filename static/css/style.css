@@ -285,7 +285,7 @@ form button {
   align-items: center;
   width: 100%;
   min-height: var(--header-height);
-  padding: 0.35rem 0;
+  padding: 1rem;
   height: auto;
   background-image: var(--img-header);
   background-repeat: repeat-x; /* repeat horizontally across the top */
