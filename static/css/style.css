@@ -98,15 +98,8 @@ body {
 .site-container { max-width: var(--container-width); margin: 0 auto; padding: 0 var(--gap); }
 .site-header { display: block; /* alias - core header area (themed via --img-header) */ }
 .site-nav { display: block; /* alias - navigation container */ }
-.site-main { display: block; /* alias - main content area */ }
+.site-main { display: block; margin: 0.5rem; /* alias - main content area */ }
 .site-footer { display: block; /* alias - footer area (thematic background applied below) */ }
-
-/* 6. Utilities: small, single-purpose helpers for quick adjustments */
-/* .u-text-center { text-align: center !important; } */
-/* .u-mt-1 { margin-top: 0.5rem !important; } */
-/* .u-mt-2 { margin-top: 1rem !important; } */
-/* .u-hidden { display: none !important; } */
-/* .u-clearfix::after { content: ""; display: table; clear: both; } */
 
 /* Page header/summary area used by templates to show an overview or summary
   placed before the main content. Keep it visually distinct but lightweight. */
@@ -214,11 +207,7 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 .btn-outline-alt {opacity: 0.95; border: 1px solid rgba(0,0,0,0.08); padding: 0.35rem 0.6rem; border-radius: 6px; }
 
 /* Small utilities */
-/* .thin { font-weight: 300; } */
 .faded { color: rgba(255,255,255,0.9); }
-/* .red-o { color: var(--accent); } */
-/* .dark-bg { background: #445261; } */
-/* .light-bg { background: #fff; } */
 .main-bg { background: var(--bg); }
 
 /* Images */
