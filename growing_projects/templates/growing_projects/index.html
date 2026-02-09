@@ -34,14 +34,8 @@
     {% for crop in crop_list %}
     <div class="col-md-4 mb-3">
       {% url 'growing_projects:crop_detail' crop.id as read_more_url %}
-      {% with card_title=crop.common_name|default:crop.scientific_name card_subtitle=crop.scientific_name read_more_label="Read more" secondary_action_template="components/actions/add_to_garden.html" %}
-      {% if crop.image %}
-        {% with image_url=crop.image.url image_alt=crop.common_name|default:crop.scientific_name %}
-          {% include "components/card_base.html" %}
-        {% endwith %}
-      {% else %}
+      {% with card_title=crop.common_name|default:crop.scientific_name card_subtitle=crop.scientific_name image_url=crop.get_image_url image_alt=crop.common_name|default:crop.scientific_name read_more_label="Read more" secondary_action_template="components/actions/add_to_garden.html" %}
         {% include "components/card_base.html" %}
-      {% endif %}
       {% endwith %}
     </div>
     {% empty %}

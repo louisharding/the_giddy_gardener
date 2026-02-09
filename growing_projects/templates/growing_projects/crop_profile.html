@@ -20,11 +20,7 @@
 
         <div class="crop-body">
             <div class="crop-image">
-                {% if crop.image %}
-                    <img src="{{ crop.image.url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" class="img-fluid rounded">
-                {% else %}
-                    <img src="{% static 'images/default.jpg' %}" alt="No image available" class="img-fluid rounded">
-                {% endif %}
+                <img src="{{ crop.get_image_url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" class="img-fluid rounded">
             </div>
 
             <div class="crop-info">

@@ -48,6 +48,7 @@ button { font: inherit; }
   --gap-sm: 0.5rem;
   --gap: 1rem;
   --gap-lg: 1.5rem;
+  --gap-vlg: 2rem;
 
   /* Static image tokens (single source-of-truth) */
   --static-path: '/static/images';
@@ -161,7 +162,8 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   background-size: 100% 100%; /* stretch to fill without cropping (may distort aspect ratio) */
   border-radius: var(--card-radius);
   box-shadow: 0 1px 3px rgba(16,24,40,0.04);
-  padding: var(--gap);
+  padding-top: var(--gap-vlg); padding-bottom: var(--gap-vlg);
+  padding-left: var(--gap-lg); padding-right: var(--gap-lg);
   color: #ffffff;
   overflow: hidden; /* ensure corners clip the background */
 }
@@ -214,8 +216,17 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 /* .image-container { position: relative; display: block; } */
 /* .image-flash { position: absolute; bottom: 6%; left: 0; background: var(--accent); color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; } */
 
-/* Crop thumbnail used in crop cards to keep thumbnails consistent */
-.crop-thumb, .card-img-top.crop-thumb {
+/* Card image: used in crop/blog cards to keep thumbnails consistent */
+.card-img-top {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+}
+
+.crop-thumb {
   width: 100%;
   height: 160px;
   object-fit: cover;
