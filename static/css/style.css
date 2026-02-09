@@ -48,6 +48,7 @@ button { font: inherit; }
   --gap-sm: 0.5rem;
   --gap: 1rem;
   --gap-lg: 1.5rem;
+  --gap-vlg: 2rem;
 
   /* Static image tokens (single source-of-truth) */
   --static-path: '/static/images';
@@ -161,7 +162,8 @@ h2 { font-size: 1.25rem; color: var(--bg); }
   background-size: 100% 100%; /* stretch to fill without cropping (may distort aspect ratio) */
   border-radius: var(--card-radius);
   box-shadow: 0 1px 3px rgba(16,24,40,0.04);
-  padding: var(--gap);
+  padding-top: var(--gap-vlg); padding-bottom: var(--gap-vlg);
+  padding-left: var(--gap-lg); padding-right: var(--gap-lg);
   color: #ffffff;
   overflow: hidden; /* ensure corners clip the background */
 }
