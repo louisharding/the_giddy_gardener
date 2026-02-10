@@ -67,7 +67,7 @@ class Crop(models.Model):
     # Life cycle; how the crop grows, matures and yields throughout it's life
     life_cycle = models.CharField(max_length=50, choices=LIFE_CYCLE_CHOICES, null=True, blank=True)
     # Image for the crop (optional). Files stored under MEDIA_ROOT/crops/
-    image = models.ImageField(upload_to='crops/', null=True, blank=True)
+    image = models.ImageField(upload_to='crops/', blank=True)
     # Sowing & Harvesting ranges; the earliest and latest a crop can be sown and harvested
     sowing_date_earliest = models.DateField(null=True, blank=True)
     sowing_date_latest = models.DateField(null=True, blank=True)
@@ -109,7 +109,12 @@ class Crop(models.Model):
     def get_image_url(self):
         """Return crop image URL or default placeholder"""
         if self.image:
-            return self.image.url
+            try:
+                # Check if file actually exists in storage
+                if self.image.storage.exists(self.image.name):
+                    return self.image.url
+            except (AttributeError, Exception):
+                pass
         return '/static/images/default.jpg'
 
 
