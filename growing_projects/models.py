@@ -107,15 +107,10 @@ class Crop(models.Model):
         super().save(*args, **kwargs)
 
     def get_image_url(self):
-        """Return crop image URL or default placeholder"""
+        """Return crop image URL or empty string when missing"""
         if self.image:
-            try:
-                # Check if file actually exists in storage
-                if self.image.storage.exists(self.image.name):
-                    return self.image.url
-            except (AttributeError, Exception):
-                pass
-        return '/static/images/default.jpg'
+            return self.image.url
+        return ""
 
 
 # A garden is simply where a user stores their saved allotments

@@ -19,9 +19,11 @@
         </header>
 
         <div class="crop-body">
+            {% if crop.get_image_url %}
             <div class="crop-image">
                 <img src="{{ crop.get_image_url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" class="img-fluid rounded">
             </div>
+            {% endif %}
 
             <div class="crop-info">
                 {% if crop.description %}
