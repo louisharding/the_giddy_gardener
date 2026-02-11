@@ -2,9 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
-from django.templatetags.static import static
 
-defaultImage = static("images/default.png")
+DEFAULT_CROP_IMAGE = "/static/images/default.png"
 
 # Crop type 
 TYPE_CHOICES = [
@@ -112,7 +111,7 @@ class Crop(models.Model):
         """Return crop image URL or default image URL when missing"""
         if self.image:
             return self.image.url
-        return defaultImage
+        return DEFAULT_CROP_IMAGE
 
 
 # A garden is simply where a user stores their saved allotments

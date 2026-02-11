@@ -219,8 +219,8 @@ h2 { font-size: 1.25rem; color: var(--bg); }
 /* Card image: used in crop/blog cards to keep thumbnails consistent */
 .card-img-top {
   width: 100%;
-  /* height: 160px; */
-  object-fit: cover;
+  height: 160px;
+  object-fit: scale-down;
   display: block;
   border-top-left-radius: var(--card-radius);
   border-top-right-radius: var(--card-radius);

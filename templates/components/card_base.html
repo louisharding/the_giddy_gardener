@@ -13,7 +13,9 @@
 #} -->
 <article class="card mb-4">
   {% if image_url %}
-  <img src="{{ image_url }}" alt="{{ image_alt|default:card_title }}" class="card-img-top" />
+  <img src="{{ image_url }}" alt="{{ image_alt|default:card_title }}" class="card-img-top" onerror="this.src='/static/images/default.png'" />
+  {% else %}
+  <img src="/static/images/default.png" alt="{{ image_alt|default:card_title }}" class="card-img-top" />
   {% endif %}
   <div class="card-body">
     <h5 class="card-title">{{ card_title }}</h5>
