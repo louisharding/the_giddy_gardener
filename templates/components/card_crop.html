@@ -1,7 +1,6 @@
 {# Crop catalogue card. Expects `crop` in context. #}
 {% url 'growing_projects:crop_detail' crop.id as read_more_url %}
-{% if crop.image %}
-  {% with image_url=crop.image.url %}
+{% with image_url=crop.get_image_url %}
   {% include "components/card_base.html" with
     card_title=crop.common_name|default:crop.scientific_name
     card_subtitle=crop.scientific_name
@@ -11,13 +10,4 @@
     read_more_label="Read more"
     secondary_action_template="components/actions/add_to_garden.html"
   %}
-  {% endwith %}
-{% else %}
-  {% include "components/card_base.html" with
-    card_title=crop.common_name|default:crop.scientific_name
-    card_subtitle=crop.scientific_name
-    read_more_url=read_more_url
-    read_more_label="Read more"
-    secondary_action_template="components/actions/add_to_garden.html"
-  %}
-{% endif %}
+{% endwith %}

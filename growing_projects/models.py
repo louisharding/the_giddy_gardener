@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+from django.templatetags.static import static
+
+defaultImage = static("images/default.png")
 
 # Crop type 
 TYPE_CHOICES = [
@@ -56,7 +59,6 @@ LIFE_CYCLE_CHOICES = (
 )
 
 
-# Could have a PICTURE field for the crop - makes perfect sense
 # A crop is grown in an allotment. Crops have multiple properties and can only be effected by admins
 class Crop(models.Model):
     scientific_name = models.CharField(max_length=200, unique=True, null=False, blank=True, default="")                 
@@ -107,10 +109,10 @@ class Crop(models.Model):
         super().save(*args, **kwargs)
 
     def get_image_url(self):
-        """Return crop image URL or empty string when missing"""
+        """Return crop image URL or default image URL when missing"""
         if self.image:
             return self.image.url
-        return ""
+        return defaultImage
 
 
 # A garden is simply where a user stores their saved allotments
