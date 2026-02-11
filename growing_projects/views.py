@@ -37,12 +37,7 @@ def crop_detail(request, slug):
     try:
         crop = queryset.get(slug=slug)
     except Crop.DoesNotExist:
-        try:
-            crop = queryset.get(pk=slug)
-        except (Crop.DoesNotExist, ValueError):
-            raise Http404("Crop does not exist")
-
-    return render(request, "growing_projects/crop_profile.html", {"crop": crop})
+        return render(request, "growing_projects/crop_profile.html", {"crop": crop})
 
 
 def home(request):
@@ -65,16 +60,6 @@ def my_garden(request):
     return render(request, 'growing_projects/my_garden.html', {"garden": garden})
 
 
-def crop_edit(request, pk):
-    """Minimal edit redirect: send user to Django admin change form if available, otherwise go back to detail."""
-    crop = get_object_or_404(Crop, pk=pk)
-    if not request.user.is_authenticated or not request.user.has_perm('growing_projects.change_crop'):
-        raise PermissionDenied
-    try:
-        admin_url = reverse('admin:growing_projects_crop_change', args=[crop.pk])
-        return redirect(admin_url)
-    except Exception:
-        return redirect('growing_projects:crop_detail', slug=crop.slug or crop.pk)
 
 # Delete a crop from the database - only for permitted users
 @login_required
