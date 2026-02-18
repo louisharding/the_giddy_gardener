@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{# home.html — Landing page hero grid. Use `.hero-grid` and `.hero-card` classes. #}
+{% block content %}
+<section class="hero-grid">
+    <div class="hero-list">
+        <!-- Simple overlay captions: image cards link to main sections -->
+        <a href="{% url 'blog:post_list' %}" aria-label="Go to User Blogs" class="hero-card">
+            <img src="{% static 'images/blog_icon.png' %}" alt="User Blogs">
+            <span class="hero-caption">User Blogs</span>
+        </a>
+
+        <a href="{% url 'growing_projects:crops' %}" aria-label="Go to Crops" class="hero-card">
+            <img src="{% static 'images/crops_icon.png' %}" alt="Crops">
+            <span class="hero-caption">Crops</span>
+        </a>
+
+        <a href="{% url 'growing_projects:my_garden' %}" aria-label="Go to my Garden" class="hero-card">
+            <img src="{% static 'images/my_garden.png' %}" alt="My Garden">
+            <span class="hero-caption">My Garden</span>
+        </a>
+    </div>
+</section>
+{% endblock %}

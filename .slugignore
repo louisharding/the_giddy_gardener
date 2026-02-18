@@ -1,0 +1,17 @@
+*.md
+.git
+.github
+local_tests/
+.vscode
+.venv
+env.py
+*.sqlite3
+db.sqlite3
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.env
+*.log
+.DS_Store
+media/

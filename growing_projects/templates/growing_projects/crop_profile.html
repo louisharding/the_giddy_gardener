@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ crop.common_name|default:crop.scientific_name }} — Crop details{% endblock %}
+
+{% block content %}
+{# crop_profile.html — Crop details. Content is rendered inside `base.html`'s `.site-container`. #}
+<section class="crop-detail">
+    <nav class="breadcrumb">
+        <button type="button" onclick="history.back()" class="btn">← Back</button>
+    </nav>
+
+    <article class="crop-card">
+        <header>
+            <h1>{{ crop.common_name|default:crop.scientific_name }}</h1>
+            {% if crop.scientific_name %}
+                <p class="muted">{{ crop.scientific_name }}</p>
+            {% endif %}
+        </header>
+
+        <div class="crop-body">
+            {% if crop.get_image_url %}
+            <div class="crop-image">
+                <img src="{{ crop.get_image_url }}" alt="{{ crop.common_name|default:crop.scientific_name }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+
+            <div class="crop-info">
+                {% if crop.description %}
+                    <p>{{ crop.description|linebreaksbr }}</p>
+                {% endif %}
+
+                <dl>
+                    {% if crop.seasons %}<dt>Seasons</dt><dd>{{ crop.seasons }}</dd>{% endif %}
+                    {% if crop.days_to_harvest %}<dt>Days to harvest</dt><dd>{{ crop.days_to_harvest }}</dd>{% endif %}
+                    {% if crop.planting_depth %}<dt>Planting depth</dt><dd>{{ crop.planting_depth }}</dd>{% endif %}
+                    {% if crop.spacing %}<dt>Spacing</dt><dd>{{ crop.spacing }}</dd>{% endif %}
+                    {% if crop.soil_type %}<dt>Soil</dt><dd>{{ crop.soil_type }}</dd>{% endif %}
+                    {% if crop.water %}<dt>Water</dt><dd>{{ crop.water }}</dd>{% endif %}
+                    {% if crop.light %}<dt>Light</dt><dd>{{ crop.light }}</dd>{% endif %}
+                    {% if crop.companion_plants %}<dt>Companion plants</dt><dd>{{ crop.companion_plants }}</dd>{% endif %}
+                    {% if crop.tips %}<dt>Tips</dt><dd>{{ crop.tips|linebreaksbr }}</dd>{% endif %}
+                </dl>
+
+                <div class="actions">
+                    <button type="button" onclick="history.back()" class="btn">Back to catalogue</button>
+
+                    {% if user.is_authenticated and perms.growing_projects.change_crop %}
+                        <a href="{% url 'growing_projects:crop_edit' crop.id %}" class="btn">Edit</a>
+                    {% endif %}
+
+                    {% if user.is_authenticated and perms.growing_projects.delete_crop %}
+                        <form action="{% url 'growing_projects:crop_delete' crop.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn danger">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}

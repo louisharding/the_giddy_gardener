@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{# blog/post_detail.html — Single post view. Renders inside `base.html`'s `.site-container`. #}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<section class="site-container mt-3">
+  <div class="masthead text-center mb-3">
+    <h1 class="display-4">{{ post.title }}</h1>
+    <p class="lead">By {{ post.author }}</p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <article class="post">
+        <p class="text-muted">Published {{ post.created_on|naturaltime }}</p>
+        {{ post.content|safe }}
+
+        <hr>
+        <h4>Comments</h4>
+        {% for comment in comments %}
+        <div class="mb-3">
+          <h6 class="mb-0">{{ comment.name }}</h6>
+          <p class="text-muted small">{{ comment.created_on|naturaltime }}</p>
+          <div>{{ comment.body|linebreaks }}</div>
+          {% if not comment.approved and comment.author == user %}
+            <p class="approval">This comment is awaiting approval</p>
+          {% endif %}
+        </div>
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+
+        <hr>
+        <h4>Leave a comment</h4>
+        {% if user.is_authenticated %}
+        <form method="post">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+        {% else %}
+          <p>Please <a href="{% url 'account_login' %}">log in</a> to leave a comment.</p>
+        {% endif %}
+      </article>
+    </div>
+
+    <aside class="col-lg-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5>About the author</h5>
+          <p>{{ post.author.profile.bio }}</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{# growing_projects/my_garden.html — User's garden management. Renders inside `base.html`'s `.site-container`. #}
+
+
+{%block page_header %}
+{% if user.is_authenticated %}
+<h1>{{ garden.owner }}'s Garden</h1>
+<h1>Crops in your garden</h1>
+<form method="post" action="{% url 'growing_projects:my_garden' %}" class="mb-4">
+  {% csrf_token %}
+  {{ add_form.as_p }}
+  <button type="submit" class="btn btn-primary">Add crop</button>
+</form>
+{% else %}
+<h1>This could be your Garden!</h1>
+<p class="mb-3">You need to be logged in to view and manage your garden.</p>
+{% endif %}
+{% endblock page_header %}
+
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<section class="site-container mt-3">
+  <div class="row">
+    {% if garden.crops.exists %}
+    {% for crop in garden.crops.all %}
+    <div class="col-md-4 mb-3">
+      {% url 'growing_projects:crop_detail' crop.id as read_more_url %}
+      {% with card_title=crop.common_name|default:crop.scientific_name card_subtitle=crop.scientific_name image_url=crop.get_image_url image_alt=crop.common_name|default:crop.scientific_name read_more_label="Read more" secondary_action_template="components/actions/remove_from_garden.html" %}
+        {% include "components/card_base.html" %}
+      {% endwith %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-12">
+      <p class="mb-3">You haven't added any crops yet.</p>
+    </div>
+    {% endif %}
+  </div>
+
+</section>
+{% else %}
+<section class="site-container mt-5">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height:40vh; gap:1rem;">
+    <div class="uh-oh-panel">
+      <img src="{% static 'images/uh-oh-gnome.png' %}" alt="Uh oh!" class="img-fluid mb-3" style="max-width:320px;" />
+      <p class="faded mb-3">You need to be logged in to view and manage your garden.</p>
+      <div class="d-flex justify-content-center" style="gap:0.5rem;">
+        <a class="btn btn-signup" href="{% url 'account_login' %}">Log in</a>
+        <a class="btn btn-signup" href="{% url 'account_signup' %}">Sign up</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

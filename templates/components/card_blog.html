@@ -1,0 +1,16 @@
+{# Blog card. Expects `post` in context. #}
+{% url 'blog:post_detail' post.slug as read_more_url %}
+{% with author=post.author.get_full_name|default:post.author.username %}
+{% with date=post.created_on|date:"F j, Y" %}
+{% with subtitle="By "|add:author|add:" · "|add:date %}
+{% include "components/card_base.html" with
+  card_title=post.title
+  card_subtitle=subtitle
+  card_text=post.excerpt|default:post.content|truncatewords:30
+  footer_meta_template="components/meta/comments.html"
+  read_more_url=read_more_url
+  read_more_label="Read more"
+%}
+{% endwith %}
+{% endwith %}
+{% endwith %}

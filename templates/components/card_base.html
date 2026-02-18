@@ -1,0 +1,46 @@
+<!-- {# Base card component. Variables:
+   card_title (required)
+   card_subtitle (optional)
+   card_text (optional)
+   image_url (optional)
+   image_alt (optional)
+  footer_meta (optional HTML)
+  footer_meta_template (optional template path)
+   read_more_url (required)
+   read_more_label (optional, default "Read more")
+  secondary_action_html (optional HTML)
+  secondary_action_template (optional template path)
+#} -->
+<article class="card mb-4">
+  {% if image_url %}
+  <img src="{{ image_url }}" alt="{{ image_alt|default:card_title }}" class="card-img-top" onerror="this.src='/static/images/default.png'" />
+  {% else %}
+  <img src="/static/images/default.png" alt="{{ image_alt|default:card_title }}" class="card-img-top" />
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ card_title }}</h5>
+    {% if card_subtitle %}
+    <p class="card-text"><em>{{ card_subtitle }}</em></p>
+    {% endif %}
+    {% if card_text %}
+    <p class="card-text">{{ card_text }}</p>
+    {% endif %}
+    <div class="mt-2 d-flex justify-content-between align-items-center">
+      <span class="faded small">
+        {% if footer_meta_template %}
+          {% include footer_meta_template %}
+        {% elif footer_meta %}
+          {{ footer_meta|safe }}
+        {% endif %}
+      </span>
+      <div class="d-flex align-items-center" style="gap:0.5rem;">
+        {% if secondary_action_template %}
+          {% include secondary_action_template %}
+        {% elif secondary_action_html %}
+          {{ secondary_action_html|safe }}
+        {% endif %}
+        <a href="{{ read_more_url }}" class="btn btn-outline-alt btn-sm">{{ read_more_label|default:"Read more" }}</a>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_header %}
+<div class="lead"><h3>{% trans "Log in" %}</h3></div>
+<div>
+  <a class="btn btn-outline-alt btn-sm" href="{% url 'growing_projects:home' %}">{% trans "Back" %}</a>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <p class="faded">{% trans "Please sign in with your account credentials." %}</p>
+        <form method="post" action="{% url 'login' %}">{% csrf_token %}
+          {{ form.non_field_errors }}
+          <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username.errors %}<div class="text-danger small">{{ form.username.errors }}</div>{% endif %}
+          </div>
+          <div class="mb-3">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {% if form.password.errors %}<div class="text-danger small">{{ form.password.errors }}</div>{% endif %}
+          </div>
+          {% if next %}
+            <input type="hidden" name="next" value="{{ next }}" />
+          {% endif %}
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn btn-signup">{% trans "Log in" %}</button>
+            <a class="btn btn-outline-alt" href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

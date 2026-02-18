@@ -1,0 +1,94 @@
+{% load static %} 
+{% url 'growing_projects:home' as home_url %}
+
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+  <title>Giddy Gardener Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts CSS -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <!-- Custom CSS-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png" />
+</head>
+
+<body class="d-flex flex-column h-100 main-bg">
+  <!-- Combined decorative header + navigation (uses tile image from --img-header) -->
+  <header class="site-header navbar navbar-expand-lg" role="banner">
+    <div class="site-container">
+      <div class="d-flex align-items-center w-100 header-row">
+        <!-- Left region -->
+        <div class="header-left d-flex align-items-center">
+          <a href="{% url 'growing_projects:home' %}" class="btn btn-signup btn-sm header-btn" aria-label="Home">Home</a>
+        </div>
+
+        <!-- Center region: brand and (optional) username under it -->
+        <div class="header-center d-flex flex-column align-items-center">
+          <a class="navbar-brand text-center" href="{% url 'growing_projects:home' %}">
+            <span class="brand">The Giddy Gardener</span>
+          </a>
+          {% if user.is_authenticated %}
+          <div class="brand-subtext small faded">Welcome back, {{ user.username }}!</div>
+          {% endif %}
+        </div>
+
+        <!-- Right region: auth button only -->
+        <div class="header-right d-flex align-items-center justify-content-end">
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <button type="submit" class="btn btn-signup btn-sm header-btn">Logout</button>
+            {% else %}
+            <a class="btn btn-signup btn-sm header-btn" href="{% url 'account_login' %}">Log in</a>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% if messages %}
+  <div class="container mt-2">
+    {% for m in messages %}
+    <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <main class="site-main flex-shrink-0">
+    <div class="site-container content-with-wood">
+      <!-- Optional per-page header (summary / overview area) -->
+      <div class="page-header">{% block page_header %}{% endblock page_header %}</div>
+
+      {% block content %}
+      <!-- Content Goes here -->
+      {% endblock content %}
+    </div>
+  </main>
+
+  <!-- Footer with repeated PNG tile background -->
+  <footer class="site-footer footer mt-auto py-5">
+    <div class="site-container">
+      <!-- Footer content (move page-specific footer items here) -->
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
