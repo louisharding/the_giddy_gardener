@@ -18,8 +18,11 @@ growing_projects/management/
 growing_projects/commands/
 debug_admin.html
 staticfiles/
-static/images/
 media/
+static/images/local_dev/
+static/images/**/*.psd
+static/images/**/*.ai
+static/images/**/*-original.*
 db.sqlite3
 *.sqlite3
 .DS_Store
